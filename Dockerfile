@@ -55,7 +55,7 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-pecl-event@testing \
     # php81-pecl-grpc@testing \
     php81-pecl-igbinary@testing \
-    php81-pecl-imagick@testing \
+    # php81-pecl-imagick@testing \
     php81-pecl-immutable_cache@testing \
     php81-pecl-jsmin@testing \
     php81-pecl-luasandbox@testing \
@@ -64,17 +64,17 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-pecl-maxminddb@testing \
     php81-pecl-mcrypt@testing \
     php81-pecl-memcache@testing \
-    php81-pecl-memcached@testing \
+    # php81-pecl-memcached@testing \
     # php81-pecl-memprof@testing \
     php81-pecl-mongodb@testing \
-    php81-pecl-msgpack@testing \
+    # php81-pecl-msgpack@testing \
     php81-pecl-oauth@testing \
     php81-pecl-opentelemetry@testing \
     php81-pecl-pcov@testing \
     php81-pecl-protobuf@testing \
     php81-pecl-psr@testing \
     php81-pecl-rdkafka@testing \
-    php81-pecl-redis@testing \
+    # php81-pecl-redis@testing \
     php81-pecl-smbclient@testing \
     php81-pecl-ssh2@testing \
     # php81-pecl-swoole@testing \
