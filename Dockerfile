@@ -57,7 +57,7 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-pecl-igbinary@testing \
     # php81-pecl-imagick@testing \
     php81-pecl-immutable_cache@testing \
-    php81-pecl-jsmin@testing \
+    # php81-pecl-jsmin@testing \
     php81-pecl-luasandbox@testing \
     php81-pecl-lzf@testing \
     php81-pecl-mailparse@testing \
