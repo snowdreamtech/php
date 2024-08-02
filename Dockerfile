@@ -108,7 +108,7 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-sysvmsg@testing \
     php81-sysvsem@testing \
     php81-sysvshm@testing \
-    php81-tideways_xhprof@testing \
+    # php81-tideways_xhprof@testing \
     php81-tidy@testing \
     php81-tokenizer@testing \
     php81-xml@testing \
