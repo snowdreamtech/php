@@ -48,12 +48,12 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-pecl-apcu@testing \
     php81-pecl-ast@testing \
     php81-pecl-brotli@testing \
-    php81-pecl-couchbase@testing \
+    # php81-pecl-couchbase@testing \
     php81-pecl-csv@testing \
     php81-pecl-decimal@testing \
     php81-pecl-ds@testing \
     php81-pecl-event@testing \
-    php81-pecl-grpc@testing \
+    # php81-pecl-grpc@testing \
     php81-pecl-igbinary@testing \
     php81-pecl-imagick@testing \
     php81-pecl-immutable_cache@testing \
@@ -65,7 +65,7 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-pecl-mcrypt@testing \
     php81-pecl-memcache@testing \
     php81-pecl-memcached@testing \
-    php81-pecl-memprof@testing \
+    # php81-pecl-memprof@testing \
     php81-pecl-mongodb@testing \
     php81-pecl-msgpack@testing \
     php81-pecl-oauth@testing \
@@ -77,12 +77,12 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-pecl-redis@testing \
     php81-pecl-smbclient@testing \
     php81-pecl-ssh2@testing \
-    php81-pecl-swoole@testing \
+    # php81-pecl-swoole@testing \
     php81-pecl-timezonedb@testing \
     php81-pecl-uploadprogress@testing \
     php81-pecl-uploadprogress-doc@testing \
     php81-pecl-uuid@testing \
-    php81-pecl-vips@testing \
+    # php81-pecl-vips@testing \
     php81-pecl-xdebug@testing \
     php81-pecl-xhprof@testing \
     php81-pecl-xhprof-assets@testing \
@@ -103,7 +103,7 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-soap@testing \
     php81-sockets@testing \
     php81-sodium@testing \
-    php81-spx@testing \
+    # php81-spx@testing \
     php81-sqlite3@testing \
     php81-sysvmsg@testing \
     php81-sysvsem@testing \
