@@ -93,7 +93,7 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-pecl-zstd@testing \
     php81-pgsql@testing \
     php81-phar@testing \
-    php81-phpdbg@testing \
+    # php81-phpdbg@testing \
     php81-posix@testing \
     php81-pspell@testing \
     php81-session@testing \
