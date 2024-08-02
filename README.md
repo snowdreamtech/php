@@ -17,7 +17,7 @@ docker run -d \
   --name=php \
   -e TZ=Asia/Shanghai \
   --restart unless-stopped \
-  snowdreamtech/php:latest
+  snowdreamtech/php:fpm-latest
 ```
 
 ### Advance
@@ -28,7 +28,7 @@ docker run -d \
   -e TZ=Asia/Shanghai \
   -v /path/to/data:/path/to/data \
   --restart unless-stopped \
-  snowdreamtech/php:latest
+  snowdreamtech/php:fpm-latest
 ```
 
 ## Docker Compose
@@ -39,8 +39,8 @@ docker run -d \
 version: "3"
 
 services:
-  php:
-    image: snowdreamtech/php:latest
+  php:fpm-
+    image: snowdreamtech/php:fpm-latest
     container_name: php
     environment:
       - TZ=Asia/Shanghai
@@ -53,8 +53,8 @@ services:
 version: "3"
 
 services:
-  php:
-    image: snowdreamtech/php:latest
+  php:fpm-
+    image: snowdreamtech/php:fpm-latest
     container_name: php
     environment:
       - TZ=Asia/Shanghai

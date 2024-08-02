@@ -1,7 +1,10 @@
 FROM snowdreamtech/alpine:3.20.2
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
-ENV PHP_MEMORY_LIMIT="512M" \
+ENV PHP_FPM_USER="www" \
+    PHP_FPM_GROUP="www" \
+    PHP_FPM_LISTEN_MODE="0660" \
+    PHP_MEMORY_LIMIT="512M" \
     PHP_MAX_UPLOAD="50M" \
     PHP_MAX_FILE_UPLOAD="200" \
     PHP_MAX_POST="100M" \
@@ -29,7 +32,7 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-exif@testing \
     php81-ffi@testing \
     php81-fileinfo@testing \
-    # php81-fpm@testing \
+    php81-fpm@testing \
     php81-ftp@testing \
     php81-gd@testing \
     php81-gettext@testing \
