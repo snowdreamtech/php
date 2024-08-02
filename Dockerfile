@@ -2,7 +2,7 @@ FROM snowdreamtech/alpine:3.20.2
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
 RUN apk add --no-cache php81@testing=8.1.29-r0 \
-    cacti-php@testing \
+    # cacti-php@testing \
     unit-php81@testing \ 
     php81-apache2@testing \
     php81-bcmath@testing \
