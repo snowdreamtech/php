@@ -116,7 +116,11 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-xmlwriter@testing \
     php81-xsl@testing \
     php81-zip@testing \ 
-    && ln -s /usr/bin/php81 /usr/bin/php
+    && ln -s /usr/bin/php81 /usr/bin/php \
+    # Installing composer
+    && wget -c https://getcomposer.org/installer -o composer-setup.php \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && rm -rf composer-setup.php
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
