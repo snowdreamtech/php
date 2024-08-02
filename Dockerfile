@@ -116,7 +116,7 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-xmlwriter@testing \
     php81-xsl@testing \
     php81-zip@testing \ 
-    ln -s /usr/bin/php81 /usr/bin/php
+    && ln -s /usr/bin/php81 /usr/bin/php
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
