@@ -137,3 +137,5 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
 COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
+
+CMD ["/usr/sbin/php-fpm81","--nodaemonize","--fpm-config","/etc/php81/php-fpm.conf","-R"]
