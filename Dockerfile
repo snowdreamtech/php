@@ -4,7 +4,7 @@ LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 RUN apk add --no-cache php81@testing=8.1.29-r0 \
     # cacti-php@testing \
     unit-php81@testing \ 
-    php81-apache2@testing \
+    # php81-apache2@testing \
     php81-bcmath@testing \
     php81-bz2@testing \
     php81-calendar@testing \
@@ -13,7 +13,7 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-ctype@testing \
     php81-curl@testing \
     php81-dba@testing \
-    php81-doc@testing \
+    # php81-doc@testing \
     php81-dom@testing \
     php81-embed@testing \
     php81-enchant@testing \
@@ -115,7 +115,8 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-xmlreader@testing \
     php81-xmlwriter@testing \
     php81-xsl@testing \
-    php81-zip@testing
+    php81-zip@testing \ 
+    ln -s /usr/bin/php81 /usr/bin/php
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
