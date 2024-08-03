@@ -1,8 +1,8 @@
 FROM snowdreamtech/alpine:3.20.2
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
-ENV PHP_FPM_USER="www" \
-    PHP_FPM_GROUP="www" \
+ENV PHP_FPM_USER="nobody" \
+    PHP_FPM_GROUP="nobody" \
     PHP_FPM_LISTEN_MODE="0660" \
     PHP_MEMORY_LIMIT="512M" \
     PHP_MAX_UPLOAD="50M" \
