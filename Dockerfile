@@ -2,7 +2,7 @@ FROM snowdreamtech/alpine:3.20.2
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
 ENV PHP_MEMORY_LIMIT="512M" \
-    PHP_MAX_UPLOAD="50M" \
+    PHP_MAX_UPLOAD="100M" \
     PHP_MAX_FILE_UPLOAD="200" \
     PHP_MAX_POST="100M" \
     PHP_DISPLAY_ERRORS="On" \
