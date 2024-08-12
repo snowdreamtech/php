@@ -162,6 +162,8 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     && sed -i "s|;log_level\s*=\s*notice|log_level = notice|g" ${PHP_FPM_CONFIG_PATH} 
 
 
+EXPOSE 9000
+
 COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
