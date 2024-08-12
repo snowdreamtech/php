@@ -134,6 +134,8 @@ RUN apk add --no-cache php81@testing=8.1.29-r0 \
     php81-xsl@testing \
     php81-zip@testing \ 
     && ln -s /usr/bin/php81 /usr/bin/php \
+    && ln -s /usr/bin/php-fpm81 /usr/bin/php-fpm \
+    && ln -s /usr/bin/php-cgi81 /usr/bin/php-cgi \
     # Installing composer
     && wget -c https://getcomposer.org/installer -O composer-setup.php \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
