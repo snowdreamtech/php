@@ -18,7 +18,8 @@ ENV PHP_FPM_USER="nobody" \
     PHP_CONFIG_PATH=/etc/php81/php.ini  \
     PHP_FPM_CONFIG_PATH=/etc/php81/php-fpm.d/www.conf 
 
-RUN apk add --no-cache php81@testing=8.1.29-r0 \
+RUN apk add --no-cache nginx=1.26.1-r0 \
+    php81@testing=8.1.29-r0 \
     # cacti-php@testing \
     unit-php81@testing \ 
     # php81-apache2@testing \
@@ -168,4 +169,4 @@ COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD ["/usr/sbin/php-fpm81","--nodaemonize","--fpm-config","/etc/php81/php-fpm.conf","-R"]
+# CMD ["sh","-c","/usr/sbin/php-fpm81","--nodaemonize","--fpm-config","/etc/php81/php-fpm.conf","-R","&&","/usr/sbin/nginx","-g", "daemon off;","-c", "/etc/nginx/nginx.conf"]
