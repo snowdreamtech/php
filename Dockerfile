@@ -1,8 +1,8 @@
 FROM snowdreamtech/alpine:3.20.2
 LABEL maintainer="snowdream <sn0wdr1am@qq.com>"
 
-ENV PHP_FPM_USER="nobody" \
-    PHP_FPM_GROUP="nobody" \
+ENV PHP_FPM_USER="nginx" \
+    PHP_FPM_GROUP="nginx" \
     PHP_FPM_HOST="127.0.0.1" \
     PHP_FPM_PORT=9000 \
     PHP_FPM_LISTEN_MODE="0660" \
@@ -154,12 +154,12 @@ RUN apk add --no-cache nginx=1.26.1-r0 \
     && sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" ${PHP_CONFIG_PATH} \
     # Modifying configuration file www.conf
     # https://wiki.alpinelinux.org/wiki/Nginx_with_PHP
-    && sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" ${PHP_FPM_CONFIG_PATH} \
-    && sed -i "s|;listen.group\s*=\s*nobody|listen.group = ${PHP_FPM_GROUP}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|;listen.owner\s*=\s*nginx|listen.owner = ${PHP_FPM_USER}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|;listen.group\s*=\s*nginx|listen.group = ${PHP_FPM_GROUP}|g" ${PHP_FPM_CONFIG_PATH} \
     && sed -i "s|;listen\s*=\s*|listen = ${PHP_FPM_HOST}:${PHP_FPM_PORT}|g" ${PHP_FPM_CONFIG_PATH} \
     && sed -i "s|;listen.mode\s*=\s*0660|listen.mode = ${PHP_FPM_LISTEN_MODE}|g" ${PHP_FPM_CONFIG_PATH} \
-    && sed -i "s|user\s*=\s*nobody|user = ${PHP_FPM_USER}|g" ${PHP_FPM_CONFIG_PATH} \
-    && sed -i "s|group\s*=\s*nobody|group = ${PHP_FPM_GROUP}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|user\s*=\s*nginx|user = ${PHP_FPM_USER}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|group\s*=\s*nginx|group = ${PHP_FPM_GROUP}|g" ${PHP_FPM_CONFIG_PATH} \
     && sed -i "s|;log_level\s*=\s*notice|log_level = notice|g" ${PHP_FPM_CONFIG_PATH} 
 
 
