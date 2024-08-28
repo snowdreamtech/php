@@ -39,7 +39,7 @@ jobs:
             driver-opts: |
               env.http_proxy=${{ env.http_proxy }}
               env.https_proxy=${{ env.http_proxy }}
-              env.no_proxy=${{ env.no_proxy }}
+              "env.no_proxy='${{ env.no_proxy}}'"
         -
           name: Login to DockerHub
           uses: docker/login-action@v3.3.0
@@ -59,9 +59,9 @@ jobs:
           with:
             context: .
             build-args: |
-              http_proxy=${{ env.http_proxy }}
-              https_proxy=${{ env.http_proxy }}
-              env.no_proxy=${{ env.no_proxy }}
+              "http_proxy=${{ env.http_proxy }}"
+              "https_proxy=${{ env.http_proxy }}"
+              "no_proxy=${{ env.no_proxy }}"
             platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/riscv64,linux/s390x
             push: true
             tags: |
