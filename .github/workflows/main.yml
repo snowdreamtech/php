@@ -69,11 +69,11 @@ jobs:
             push: true
             tags: |
               snowdreamtech/php:fpm-nginx-latest
-              snowdreamtech/php:fpm-8.1.29-nginx-1.26.1
+              snowdreamtech/php:fpm-8.1.29-nginx-1.26.2
               snowdreamtech/php:fpm-8.1-nginx-1.26
               snowdreamtech/php:fpm-8-nginx-1
               ghcr.io/snowdreamtech/php:fpm-nginx-latest
-              ghcr.io/snowdreamtech/php:fpm-8.1.29-nginx-1.26.1
+              ghcr.io/snowdreamtech/php:fpm-8.1.29-nginx-1.26.2
               ghcr.io/snowdreamtech/php:fpm-8.1-nginx-1.26
               ghcr.io/snowdreamtech/php:fpm-8-nginx-1
              

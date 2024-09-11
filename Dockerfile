@@ -18,7 +18,7 @@ ENV PHP_FPM_USER="nginx" \
     PHP_CONFIG_PATH=/etc/php81/php.ini  \
     PHP_FPM_CONFIG_PATH=/etc/php81/php-fpm.d/www.conf 
 
-RUN apk add --no-cache nginx=1.26.1-r0 \
+RUN apk add --no-cache nginx=1.26.2-r0 \
     php81@testing=8.1.29-r0 \
     # cacti-php@testing \
     unit-php81@testing \ 
