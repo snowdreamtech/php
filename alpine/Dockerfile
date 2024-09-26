@@ -59,7 +59,7 @@ RUN apk add --no-cache php82@community=8.2.24-r0 \
     php82-opcache@community \
     php82-openssl@community \
     php82-pcntl@community \
-    php82-pdlib@testing \
+    # php82-pdlib@testing \
     php82-pdo@community \
     php82-pdo_dblib@community \
     php82-pdo_mysql@community \
@@ -72,17 +72,17 @@ RUN apk add --no-cache php82@community=8.2.24-r0 \
     php82-pecl-apfd@testing \
     php82-pecl-ast@community \
     php82-pecl-brotli@community \
-    php82-pecl-couchbase@community \
+    # php82-pecl-couchbase@community \
     php82-pecl-decimal@community \
     php82-pecl-ds@community \
     php82-pecl-event@community \
     php82-pecl-excimer@testing \
-    php82-pecl-grpc@community \
+    # php82-pecl-grpc@community \
     php82-pecl-igbinary@community \
     # php82-pecl-imagick@community \
     # php82-pecl-imagick-dev@community \
     php82-pecl-immutable_cache@testing \
-    php82-pecl-jsmin@testing \
+    # php82-pecl-jsmin@testing \
     php82-pecl-luasandbox@community \
     php82-pecl-lzf@community \
     php82-pecl-mailparse@community \
