@@ -95,7 +95,7 @@ RUN apk add --no-cache php82@community=8.2.24-r0 \
     php82-pecl-oauth@testing \
     php82-pecl-opentelemetry@community \
     php82-pecl-pcov@community \
-    php82-pecl-phalcon@testing \
+    # php82-pecl-phalcon@testing \
     php82-pecl-protobuf@community \
     php82-pecl-psr@community \
     php82-pecl-rdkafka@community \
