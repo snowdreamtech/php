@@ -23,8 +23,8 @@ ENV PHP_MEMORY_LIMIT="512M" \
     PHP_CGI_FIX_PATHINFO=0 \
     PHP_CONFIG_PATH=/etc/php82/php.ini  \
     PHP_FPM_CONFIG_PATH=/etc/php82/php-fpm.d/www.conf \
-    PHP_FPM_USER="nobody" \
-    PHP_FPM_GROUP="nobody" \
+    PHP_FPM_USER="nginx" \
+    PHP_FPM_GROUP="nginx" \
     PHP_FPM_HOST="127.0.0.1" \
     PHP_FPM_PORT=9000 \
     PHP_FPM_LISTEN_MODE="0660" 
@@ -152,6 +152,7 @@ RUN apk add --no-cache php82@community=8.2.24-r0 \
     php82-zip@community \
     unit-php82@community \
     xapian-bindings-php82@community \
+    nginx=1.26.2-r0 \
     && ln -s /usr/bin/php82 /usr/bin/php \
     && ln -s /usr/bin/php-fpm82 /usr/bin/php-fpm \
     && ln -s /usr/bin/php-cgi82 /usr/bin/php-cgi \
@@ -187,4 +188,4 @@ COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD ["/usr/sbin/php-fpm82","--nodaemonize","--fpm-config","/etc/php82/php-fpm.conf","-R"]
+# CMD ["/usr/sbin/php-fpm82","--nodaemonize","--fpm-config","/etc/php82/php-fpm.conf","-R"]
