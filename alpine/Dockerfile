@@ -23,7 +23,7 @@ ENV PHP_MEMORY_LIMIT="512M" \
     PHP_CGI_FIX_PATHINFO=0 \
     PHP_CONFIG_PATH=/etc/php82/php.ini
 
-RUN apk add --no-cache php82@community=php82-8.2.25-r0 \
+RUN apk add --no-cache php82@community=8.2.25-r0 \
     php82-apache2@community \
     php82-bcmath@community \
     php82-bz2@community \
