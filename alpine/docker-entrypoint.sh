@@ -1,6 +1,12 @@
 #!/bin/sh
 set -e
 
+#nginx 
+/usr/sbin/nginx -c /etc/nginx/nginx.conf
+
+#fpm
+/usr/sbin/php-fpm82 --nodaemonize --fpm-config /etc/php82/php-fpm.conf -R
+
 # exec commands
 if [ -n "$*" ]; then
     sh -c "$*"
