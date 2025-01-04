@@ -18,6 +18,18 @@ ENV KEEPALIVE=1 \
     # which are port numbers less than 1024. 
     CAP_NET_BIND_SERVICE=0
 
+ENV PHP_VERSION=2:8.2+93 \ 
+    PHP_MEMORY_LIMIT="512M" \
+    PHP_MAX_UPLOAD="100M" \
+    PHP_MAX_FILE_UPLOAD="200" \
+    PHP_MAX_POST="100M" \
+    PHP_MAX_EXECUTION_TIME=600 \
+    PHP_DISPLAY_ERRORS="Off" \
+    PHP_DISPLAY_STARTUP_ERRORS="Off" \
+    PHP_ERROR_REPORTING="E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR" \
+    PHP_CGI_FIX_PATHINFO=0 \
+    PHP_CONFIG_PATH=/etc/php/8.2/cli/php.ini
+
 ARG GID=1000 \
     UID=1000  \
     USER=php \
@@ -36,6 +48,102 @@ RUN set -eux \
     && rm -rf /tmp/* \
     && rm -rf /var/tmp/* 
 
+RUN set -eux \
+    && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
+    && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
+    php=${PHP_VERSION} \
+    php8.2-amqp \
+    php8.2-apcu \
+    php8.2-ast \
+    php8.2-bcmath \
+    php8.2-bz2 \
+    php8.2-cgi \
+    php8.2-cli \
+    php8.2-common \
+    php8.2-curl \
+    php8.2-dba \
+    php8.2-dev \
+    php8.2-ds \
+    php8.2-enchant \
+    php8.2-fpm \
+    php8.2-gd \
+    php8.2-gearman \
+    php8.2-gmagick \
+    php8.2-gmp \
+    php8.2-gnupg \
+    php8.2-http \
+    php8.2-igbinary \
+    php8.2-imagick \
+    php8.2-imap \
+    php8.2-interbase \
+    php8.2-intl \
+    php8.2-ldap \
+    php8.2-libvirt-php \
+    php8.2-mailparse \
+    php8.2-maxminddb \
+    php8.2-mbstring \
+    php8.2-mcrypt \
+    php8.2-memcache \
+    php8.2-memcached \
+    php8.2-mongodb \
+    php8.2-msgpack \
+    php8.2-mysql \
+    php8.2-oauth \
+    php8.2-odbc \
+    php8.2-opcache \
+    php8.2-pcov \
+    php8.2-pgsql \
+    php8.2-phpdbg \
+    php8.2-pinba \
+    php8.2-ps \
+    php8.2-pspell \
+    php8.2-psr \
+    php8.2-raphf \
+    php8.2-readline \
+    php8.2-redis \
+    php8.2-rrd \
+    php8.2-snmp \
+    php8.2-soap \
+    php8.2-solr \
+    php8.2-sqlite3 \
+    php8.2-ssh2 \
+    php8.2-stomp \
+    php8.2-sybase \
+    php8.2-tideways \
+    php8.2-tidy \
+    php8.2-uopz \
+    php8.2-uploadprogress \
+    php8.2-uuid \
+    php8.2-xdebug \
+    php8.2-xml \
+    php8.2-xmlrpc \
+    php8.2-xsl \
+    php8.2-yac \
+    php8.2-yaml \
+    php8.2-zip \
+    php8.2-zmq \
+    # && ln -s /usr/bin/php /usr/bin/php \
+    # Installing composer
+    && wget -c https://getcomposer.org/installer -O composer-setup.php \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && rm -rf composer-setup.php \
+    # Modifying configuration file php.ini
+    # https://wiki.alpinelinux.org/wiki/Nginx_with_PHP
+    && sed -i "s|display_errors\s*=\s*Off|display_errors = ${PHP_DISPLAY_ERRORS}|i" ${PHP_CONFIG_PATH} \
+    && sed -i "s|display_startup_errors\s*=\s*Off|display_startup_errors = ${PHP_DISPLAY_STARTUP_ERRORS}|i" ${PHP_CONFIG_PATH} \
+    && sed -i "s|error_reporting\s*=\s*E_ALL & ~E_DEPRECATED & ~E_STRICT|error_reporting = ${PHP_ERROR_REPORTING}|i" ${PHP_CONFIG_PATH} \
+    && sed -i "s|;*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" ${PHP_CONFIG_PATH} \
+    && sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${PHP_MAX_UPLOAD}|i" ${PHP_CONFIG_PATH} \
+    && sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" ${PHP_CONFIG_PATH} \
+    && sed -i "s|;*max_execution_time =.*|max_execution_time = ${PHP_MAX_EXECUTION_TIME}|i" ${PHP_CONFIG_PATH} \
+    && sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" ${PHP_CONFIG_PATH} \
+    && sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" ${PHP_CONFIG_PATH} \
+    && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
+    && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/* \
+    && rm -rf /var/tmp/*
+
 # Enable CAP_NET_BIND_SERVICE
 RUN set -eux \
     && if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \
@@ -48,16 +156,6 @@ RUN set -eux \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
     && rm -rf /var/tmp/* 
-
-RUN set -eux \
-    && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
-    && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
-    vim \
-    && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
-    && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/* \
-    && rm -rf /var/tmp/*
 
 # Switch to the user
 USER ${USER}
