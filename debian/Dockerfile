@@ -51,6 +51,7 @@ RUN set -eux \
 RUN set -eux \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
+    imagemagick \
     php=${PHP_VERSION} \
     php8.2-amqp \
     php8.2-apcu \
@@ -68,7 +69,7 @@ RUN set -eux \
     php8.2-fpm \
     php8.2-gd \
     php8.2-gearman \
-    php8.2-gmagick \
+    # php8.2-gmagick \
     php8.2-gmp \
     php8.2-gnupg \
     php8.2-http \
@@ -118,7 +119,7 @@ RUN set -eux \
     php8.2-xml \
     php8.2-xmlrpc \
     php8.2-xsl \
-    php8.2-yac \
+    # php8.2-yac \
     php8.2-yaml \
     php8.2-zip \
     php8.2-zmq \
