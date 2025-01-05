@@ -30,6 +30,13 @@ ENV PHP_VERSION=2:8.2+93 \
     PHP_CGI_FIX_PATHINFO=0 \
     PHP_CONFIG_PATH=/etc/php/8.2/cli/php.ini
 
+ENV PHP_FPM_CONFIG_PATH=/etc/php/8.2/fpm/pool.d/www.conf \
+    PHP_FPM_USER="php" \
+    PHP_FPM_GROUP="php" \
+    PHP_FPM_HOST="127.0.0.1" \
+    PHP_FPM_PORT=9000 \
+    PHP_FPM_LISTEN_MODE="0660"
+    
 ARG GID=1000 \
     UID=1000  \
     USER=php \
@@ -123,7 +130,9 @@ RUN set -eux \
     php8.2-yaml \
     php8.2-zip \
     php8.2-zmq \
-    # && ln -s /usr/bin/php /usr/bin/php \
+    && ln -sf `which php8.2` /usr/bin/php \
+    && ln -sf `which php-fpm8.2` /usr/bin/php-fpm \
+    && ln -sf `which php-cgi8.2` /usr/bin/php-cgi \
     # Installing composer
     && wget -c https://getcomposer.org/installer -O composer-setup.php \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
@@ -139,6 +148,15 @@ RUN set -eux \
     && sed -i "s|;*max_execution_time =.*|max_execution_time = ${PHP_MAX_EXECUTION_TIME}|i" ${PHP_CONFIG_PATH} \
     && sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" ${PHP_CONFIG_PATH} \
     && sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" ${PHP_CONFIG_PATH} \
+    # Modifying configuration file www.conf
+    # https://wiki.alpinelinux.org/wiki/Nginx_with_PHP
+    && sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|;listen.group\s*=\s*nobody|listen.group = ${PHP_FPM_GROUP}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|;listen\s*=\s*|listen = ${PHP_FPM_HOST}:${PHP_FPM_PORT}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|;listen.mode\s*=\s*0660|listen.mode = ${PHP_FPM_LISTEN_MODE}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|user\s*=\s*nobody|user = ${PHP_FPM_USER}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|group\s*=\s*nobody|group = ${PHP_FPM_GROUP}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|;log_level\s*=\s*notice|log_level = notice|g" ${PHP_FPM_CONFIG_PATH} \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
     && rm -rf /var/lib/apt/lists/* \
@@ -163,6 +181,8 @@ USER ${USER}
 
 # Set the workdir
 WORKDIR ${WORKDIR}
+
+EXPOSE 9000
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
