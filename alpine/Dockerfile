@@ -30,6 +30,13 @@ ENV PHP_VERSION=8.4.2-r0 \
     PHP_CGI_FIX_PATHINFO=0 \
     PHP_CONFIG_PATH=/etc/php84/php.ini
 
+ENV PHP_FPM_CONFIG_PATH=/etc/php84/php-fpm.d/www.conf \
+    PHP_FPM_USER="php" \
+    PHP_FPM_GROUP="php" \
+    PHP_FPM_HOST="127.0.0.1" \
+    PHP_FPM_PORT=9000 \
+    PHP_FPM_LISTEN_MODE="0660"
+
 ARG GID=1000 \
     UID=1000  \
     USER=php \
@@ -110,7 +117,9 @@ RUN apk add --no-cache \
     php84-xsl \
     php84-zip \
     unit-php84 \   
-    && ln -s /usr/bin/php84 /usr/bin/php \
+    && ln -sf `which php84` /usr/bin/php \
+    && ln -sf `which php-fpm84` /usr/bin/php-fpm \
+    && ln -sf `which php-cgi84` /usr/bin/php-cgi \
     # Installing composer
     && wget -c https://getcomposer.org/installer -O composer-setup.php \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
@@ -125,7 +134,16 @@ RUN apk add --no-cache \
     && sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" ${PHP_CONFIG_PATH} \
     && sed -i "s|;*max_execution_time =.*|max_execution_time = ${PHP_MAX_EXECUTION_TIME}|i" ${PHP_CONFIG_PATH} \
     && sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" ${PHP_CONFIG_PATH} \
-    && sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" ${PHP_CONFIG_PATH}
+    && sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" ${PHP_CONFIG_PATH} \
+   # Modifying configuration file www.conf
+    # https://wiki.alpinelinux.org/wiki/Nginx_with_PHP
+    && sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|;listen.group\s*=\s*nobody|listen.group = ${PHP_FPM_GROUP}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|;listen\s*=\s*|listen = ${PHP_FPM_HOST}:${PHP_FPM_PORT}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|;listen.mode\s*=\s*0660|listen.mode = ${PHP_FPM_LISTEN_MODE}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|user\s*=\s*nobody|user = ${PHP_FPM_USER}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|group\s*=\s*nobody|group = ${PHP_FPM_GROUP}|g" ${PHP_FPM_CONFIG_PATH} \
+    && sed -i "s|;log_level\s*=\s*notice|log_level = notice|g" ${PHP_FPM_CONFIG_PATH} 
 
 # Enable CAP_NET_BIND_SERVICE
 RUN if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \
@@ -138,6 +156,8 @@ USER ${USER}
 
 # Set the workdir
 WORKDIR ${WORKDIR}
+
+EXPOSE 9000
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
