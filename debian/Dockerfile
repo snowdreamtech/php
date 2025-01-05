@@ -27,16 +27,14 @@ ENV PHP_VERSION=2:8.2+93 \
     PHP_DISPLAY_ERRORS="Off" \
     PHP_DISPLAY_STARTUP_ERRORS="Off" \
     PHP_ERROR_REPORTING="E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR" \
-    PHP_CGI_FIX_PATHINFO=0 \
-    PHP_CONFIG_PATH=/etc/php/8.2/cli/php.ini
+    PHP_CGI_FIX_PATHINFO=0
 
-ENV PHP_FPM_CONFIG_PATH=/etc/php/8.2/fpm/pool.d/www.conf \
-    PHP_FPM_USER="php" \
+ENV PHP_FPM_USER="php" \
     PHP_FPM_GROUP="php" \
     PHP_FPM_HOST="127.0.0.1" \
     PHP_FPM_PORT=9000 \
     PHP_FPM_LISTEN_MODE="0660"
-    
+
 ARG GID=1000 \
     UID=1000  \
     USER=php \
@@ -139,24 +137,26 @@ RUN set -eux \
     && rm -rf composer-setup.php \
     # Modifying configuration file php.ini
     # https://wiki.alpinelinux.org/wiki/Nginx_with_PHP
-    && sed -i "s|display_errors\s*=\s*Off|display_errors = ${PHP_DISPLAY_ERRORS}|i" ${PHP_CONFIG_PATH} \
-    && sed -i "s|display_startup_errors\s*=\s*Off|display_startup_errors = ${PHP_DISPLAY_STARTUP_ERRORS}|i" ${PHP_CONFIG_PATH} \
-    && sed -i "s|error_reporting\s*=\s*E_ALL & ~E_DEPRECATED & ~E_STRICT|error_reporting = ${PHP_ERROR_REPORTING}|i" ${PHP_CONFIG_PATH} \
-    && sed -i "s|;*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" ${PHP_CONFIG_PATH} \
-    && sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${PHP_MAX_UPLOAD}|i" ${PHP_CONFIG_PATH} \
-    && sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" ${PHP_CONFIG_PATH} \
-    && sed -i "s|;*max_execution_time =.*|max_execution_time = ${PHP_MAX_EXECUTION_TIME}|i" ${PHP_CONFIG_PATH} \
-    && sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" ${PHP_CONFIG_PATH} \
-    && sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" ${PHP_CONFIG_PATH} \
+    && find /etc  -name "php.ini" \
+    -exec sed -i "s|;*\s*display_errors\s*=\s*Off|display_errors = ${PHP_DISPLAY_ERRORS}|g" {} \; \
+    -exec sed -i "s|;*\s*display_startup_errors\s*=\s*Off|display_startup_errors = ${PHP_DISPLAY_STARTUP_ERRORS}|g" {} \; \
+    -exec sed -i "s|;*\s*error_reporting\s*=\s*E_ALL & ~E_DEPRECATED & ~E_STRICT|error_reporting = ${PHP_ERROR_REPORTING}|g" {} \; \
+    -exec sed -i "s|;*\s*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|g" {} \; \
+    -exec sed -i "s|;*\s*upload_max_filesize =.*|upload_max_filesize = ${PHP_MAX_UPLOAD}|g" {} \; \
+    -exec sed -i "s|;*\s*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|g" {} \; \
+    -exec sed -i "s|;*\s*max_execution_time =.*|max_execution_time = ${PHP_MAX_EXECUTION_TIME}|g" {} \; \
+    -exec sed -i "s|;*\s*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|g" {} \; \
+    -exec sed -i "s|;*\s*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|g" {} \; \
     # Modifying configuration file www.conf
     # https://wiki.alpinelinux.org/wiki/Nginx_with_PHP
-    && sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" ${PHP_FPM_CONFIG_PATH} \
-    && sed -i "s|;listen.group\s*=\s*nobody|listen.group = ${PHP_FPM_GROUP}|g" ${PHP_FPM_CONFIG_PATH} \
-    && sed -i "s|;listen\s*=\s*|listen = ${PHP_FPM_HOST}:${PHP_FPM_PORT}|g" ${PHP_FPM_CONFIG_PATH} \
-    && sed -i "s|;listen.mode\s*=\s*0660|listen.mode = ${PHP_FPM_LISTEN_MODE}|g" ${PHP_FPM_CONFIG_PATH} \
-    && sed -i "s|user\s*=\s*nobody|user = ${PHP_FPM_USER}|g" ${PHP_FPM_CONFIG_PATH} \
-    && sed -i "s|group\s*=\s*nobody|group = ${PHP_FPM_GROUP}|g" ${PHP_FPM_CONFIG_PATH} \
-    && sed -i "s|;log_level\s*=\s*notice|log_level = notice|g" ${PHP_FPM_CONFIG_PATH} \
+    && find /etc  -name "www.conf" \
+    -exec sed -i "s|;*\s*listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" {} \; \
+    -exec sed -i "s|;*\s*listen.group\s*=\s*nobody|listen.group = ${PHP_FPM_GROUP}|g" {} \; \
+    -exec sed -i "s|;*\s*listen\s*=\s*|listen = ${PHP_FPM_HOST}:${PHP_FPM_PORT}|g" {} \; \
+    -exec sed -i "s|;*\s*listen.mode\s*=\s*0660|listen.mode = ${PHP_FPM_LISTEN_MODE}|g" {} \; \
+    -exec sed -i "s|;*\s*user\s*=\s*nobody|user = ${PHP_FPM_USER}|g" {} \; \
+    -exec sed -i "s|;*\s*group\s*=\s*nobody|group = ${PHP_FPM_GROUP}|g" {} \; \
+    -exec sed -i "s|;*\s*log_level\s*=\s*notice|log_level = notice|g" {} \; \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
     && rm -rf /var/lib/apt/lists/* \
