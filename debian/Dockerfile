@@ -128,6 +128,9 @@ RUN set -eux \
     php8.2-yaml \
     php8.2-zip \
     php8.2-zmq \
+    && mkdir -p /run/php \
+    && touch /run/php/php8.2-fpm.pid \
+    && touch /var/log/php8.2-fpm.log \
     && ln -sf `which php8.2` /usr/bin/php \
     && ln -sf `which php-fpm8.2` /usr/bin/php-fpm \
     && ln -sf `which php-cgi8.2` /usr/bin/php-cgi \
