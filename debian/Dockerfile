@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/php" \
     org.opencontainers.image.vendor="Snowdream Tech" \
-    org.opencontainers.image.version="12.8" \
+    org.opencontainers.image.version="8.2.26" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/php"
 
 # keep the docker container running
@@ -117,7 +117,7 @@ RUN set -eux \
     php8.2-sybase \
     php8.2-tideways \
     php8.2-tidy \
-    php8.2-uopz \
+    # php8.2-uopz \
     php8.2-uploadprogress \
     php8.2-uuid \
     php8.2-xdebug \
