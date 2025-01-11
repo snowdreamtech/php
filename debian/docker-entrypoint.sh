@@ -4,6 +4,9 @@ set -e
 # start nginx
 /usr/sbin/nginx -c /etc/nginx/nginx.conf
 
+#cgi
+/usr/bin/php-cgi -b 127.0.0.1:9000 &
+
 # exec commands
 if [ -n "$*" ]; then
     sh -c "$*"
