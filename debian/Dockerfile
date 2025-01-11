@@ -171,6 +171,8 @@ RUN set -eux \
     # Chown the files of php to nginx
     && find /etc  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
     && find /usr  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
+    && find /run  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
+    && find /var/run  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
     && find /var/log  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
