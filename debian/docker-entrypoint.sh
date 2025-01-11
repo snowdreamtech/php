@@ -4,6 +4,9 @@ set -e
 # start nginx
 /usr/sbin/nginx -c /etc/nginx/nginx.conf
 
+#fpm
+/usr/bin/php-fpm --fpm-config /etc/php/8.2/fpm/php-fpm.conf
+
 # exec commands
 if [ -n "$*" ]; then
     sh -c "$*"
