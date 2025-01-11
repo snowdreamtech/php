@@ -158,10 +158,10 @@ RUN if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \
     fi
 
 # Switch to the user
-USER ${USER}
+USER nginx
 
 # Set the workdir
-WORKDIR ${WORKDIR}
+WORKDIR /home/nginx
 
 EXPOSE 9000
 
