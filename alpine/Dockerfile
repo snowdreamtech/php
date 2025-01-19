@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/php" \
     org.opencontainers.image.vendor="Snowdream Tech" \
-    org.opencontainers.image.version="8.4.2" \
+    org.opencontainers.image.version="8.4.3" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/php"
 
 # keep the docker container running
@@ -18,7 +18,7 @@ ENV KEEPALIVE=1 \
     # which are port numbers less than 1024. 
     CAP_NET_BIND_SERVICE=0 
 
-ENV PHP_VERSION=8.4.2-r0 \ 
+ENV PHP_VERSION=8.4.3-r0 \ 
     PHP_MEMORY_LIMIT="512M" \
     PHP_MAX_UPLOAD="100M" \
     PHP_MAX_FILE_UPLOAD="200" \
