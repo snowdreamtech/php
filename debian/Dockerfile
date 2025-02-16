@@ -12,6 +12,12 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.version="8.2.26" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/php"
 
+# Switch to the user
+USER root
+
+# Set the workdir
+WORKDIR /root
+
 # keep the docker container running
 ENV KEEPALIVE=1 \
     # The cap_net_bind_service capability in Linux allows a process to bind a socket to Internet domain privileged ports, 
@@ -37,8 +43,8 @@ ENV PHP_FPM_USER="nginx" \
 
 ARG GID=1000 \
     UID=1000  \
-    USER=root \
-    WORKDIR=/home/nginx
+    USER=php \
+    WORKDIR=/home/php
 
 # Create a user with UID and GID
 RUN set -eux \
