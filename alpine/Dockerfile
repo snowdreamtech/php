@@ -37,8 +37,8 @@ ENV PHP_FPM_USER="nginx" \
 
 ARG GID=1000 \
     UID=1000  \
-    USER=php \
-    WORKDIR=/home/php
+    USER=root \
+    WORKDIR=/home/nginx
 
 # Create a user with UID and GID
 RUN if [ "${USER}" != "root" ]; then \
