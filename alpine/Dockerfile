@@ -53,6 +53,8 @@ RUN if [ "${USER}" != "root" ]; then \
     # sed -i "/%sudo/c ${USER} ALL=(ALL:ALL) NOPASSWD:ALL" /etc/sudoers; \
     fi
 
+COPY --chown=nginx:nginx default.conf /etc/nginx/http.d
+
 RUN apk add --no-cache \
     php84=${PHP_VERSION} \
     php84-apache2 \
