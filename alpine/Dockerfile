@@ -145,11 +145,15 @@ RUN apk add --no-cache \
     && find /etc  -name "www.conf" \
     -exec sed -i "s|;*\s*listen.owner\s*=\s*.*|listen.owner = ${PHP_FPM_USER}|g" {} \; \
     -exec sed -i "s|;*\s*listen.group\s*=\s*.*|listen.group = ${PHP_FPM_GROUP}|g" {} \; \
-    -exec sed -i "s|;*\s*listen\s*=\s*|listen = ${PHP_FPM_HOST}:${PHP_FPM_PORT}|g" {} \; \
+    -exec sed -i "s|;*\s*listen\s*=\s*.*|listen = ${PHP_FPM_HOST}:${PHP_FPM_PORT}|g" {} \; \
     -exec sed -i "s|;*\s*listen.mode\s*=\s*0660|listen.mode = ${PHP_FPM_LISTEN_MODE}|g" {} \; \
     -exec sed -i "s|;*\s*user\s*=\s*.*|user = ${PHP_FPM_USER}|g" {} \; \
     -exec sed -i "s|;*\s*group\s*=\s*.*|group = ${PHP_FPM_GROUP}|g" {} \; \
-    -exec sed -i "s|;*\s*log_level\s*=\s*notice|log_level = notice|g" {} \; 
+    -exec sed -i "s|;*\s*log_level\s*=\s*notice|log_level = notice|g" {} \; \
+    # Chown the files of php to nginx
+    && find /etc  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
+    && find /usr  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
+    && find /var/log  -name "*php*" -exec chown -Rv nginx:nginx {} \; 
 
 # Enable CAP_NET_BIND_SERVICE
 RUN if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \
