@@ -186,10 +186,10 @@ RUN set -eux \
     && rm -rf /var/tmp/* 
 
 # Switch to the user
-USER ${USER}
+USER nginx
 
 # Set the workdir
-WORKDIR ${WORKDIR}
+WORKDIR /home/nginx
 
 EXPOSE 9000
 
