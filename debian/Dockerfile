@@ -59,6 +59,8 @@ RUN set -eux \
     && rm -rf /tmp/* \
     && rm -rf /var/tmp/* 
 
+COPY --chown=nginx:nginx default.conf /etc/nginx/conf.d
+
 RUN set -eux \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
