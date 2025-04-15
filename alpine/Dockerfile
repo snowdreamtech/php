@@ -41,8 +41,8 @@ ENV PHP_FPM_USER="nginx" \
     PHP_FPM_PORT=9000 \
     PHP_FPM_LISTEN_MODE="0660"
 
-ARG GID=1000 \
-    UID=1000  \
+ARG GID=1001 \
+    UID=1001  \
     USER=php \
     WORKDIR=/home/php
 
