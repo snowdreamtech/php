@@ -37,8 +37,8 @@ ENV PHP_FPM_USER="nginx" \
 
 ARG GID=1000 \
     UID=1000  \
-    USER=nginx \
-    WORKDIR=/home/nginx
+    USER=php \
+    WORKDIR=/home/php
 
 # Create a user with UID and GID
 RUN set -eux \
