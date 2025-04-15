@@ -123,6 +123,9 @@ RUN apk add --no-cache \
     php84-xsl \
     php84-zip \
     unit-php84 \   
+    && touch /run/php-fpm84.pid \
+    && mkdir -p /var/log/php84 \
+    && touch /var/log/php84/error.log \
     && ln -sf `which php84` /usr/bin/php \
     && ln -sf `which php-fpm84` /usr/bin/php-fpm \
     && ln -sf `which php-cgi84` /usr/bin/php-cgi \
@@ -155,6 +158,8 @@ RUN apk add --no-cache \
     # Chown the files of php to nginx
     && find /etc  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
     && find /usr  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
+    && find /run  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
+    && find /var/run  -name "*php*" -exec chown -Rv nginx:nginx {} \; \
     && find /var/log  -name "*php*" -exec chown -Rv nginx:nginx {} \; 
 
 # Enable CAP_NET_BIND_SERVICE
