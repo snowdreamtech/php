@@ -79,7 +79,7 @@ RUN set -eux \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
     imagemagick \
     php=${PHP_VERSION} \
-    php8.4-* \
+    && apt-cache search php8.4- | awk '{print $1}' | grep -Ev 'php8.4-yac|php8.4-gmagick' | xargs apt-get -qqy install --no-install-recommends \
     && mkdir -p /run/php \
     && touch /run/php/php8.4-fpm.pid \
     && touch /var/log/php8.4-fpm.log \
