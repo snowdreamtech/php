@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/php" \
     org.opencontainers.image.vendor="Snowdream Tech" \
-    org.opencontainers.image.version="8.4.5" \
+    org.opencontainers.image.version="8.4.14" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/php"
     
 # Switch to the user
@@ -48,7 +48,7 @@ ENV KEEPALIVE=${KEEPALIVE} \
     USER=${USER} \
     WORKDIR=${WORKDIR} 
 
-ENV PHP_VERSION=8.4.5-r0 \ 
+ENV PHP_VERSION=8.4.14-r0 \ 
     PHP_MEMORY_LIMIT="512M" \
     PHP_MAX_UPLOAD="100M" \
     PHP_MAX_FILE_UPLOAD="200" \
