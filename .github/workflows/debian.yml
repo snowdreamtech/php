@@ -5,6 +5,8 @@ on:
     branches:
       - "main"
       - "dev"
+      - "cgi"
+      - "fpm"
       - "feat/**"
       - "branch/**"
       - "feature/**"
@@ -27,6 +29,8 @@ on:
     branches:
       - "main"
       - "dev"
+      - "cgi"
+      - "fpm"
       - "feat/**"
       - "branch/**"
       - "feature/**"
