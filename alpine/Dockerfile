@@ -121,9 +121,9 @@ RUN sed -i '3,$d' /etc/apk/repositories \
 # Install Microsoft ODBC Driver for SQL Server（only for amd64 and arm64 architecture）
 # see more: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16#alpine
 RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
-        && architecture=$TARGETARCH \
+        architecture="$TARGETARCH"; \
         # install dependencies
-        && apk update \
+        apk update \
         && apk add --no-cache curl gnupg \
         # Download the desired package(s)
         && curl -O https://download.microsoft.com/download/fae28b9a-d880-42fd-9b98-d779f0fdd77f/msodbcsql18_18.5.1.1-1_$architecture.apk \
@@ -142,8 +142,7 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         # Clean up
         && rm -f msodbcsql18_18.5.1.1-1_$architecture.apk msodbcsql18_18.5.1.1-1_$architecture.sig \
         && rm -f mssql-tools18_18.4.1.1-1_$architecture.apk mssql-tools18_18.4.1.1-1_$architecture.sig \
-        && apk del --no-cache gnupg \
-        ; \
+        && apk del --no-cache gnupg; \
     else \
         echo "Skipping Microsoft ODBC Driver install for $TARGETARCH"; \
     fi
