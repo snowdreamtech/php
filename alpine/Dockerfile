@@ -164,8 +164,8 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         && pecl install pdo_sqlsrv \
         && echo extension=pdo_sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/10_pdo_sqlsrv.ini \
         && echo extension=sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/20_sqlsrv.ini ; \
-        && php -m | grep -E 'pdo_sqlsrv' \
-        && php -m | grep -E 'sqlsrv' \
+        && php -m | grep -E 'pdo_sqlsrv' ; \
+        && php -m | grep -E 'sqlsrv' ; \
         && php -m | grep -E 'odbc' ; \
     fi
 
