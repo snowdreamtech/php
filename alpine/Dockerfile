@@ -118,6 +118,17 @@ RUN sed -i '3,$d' /etc/apk/repositories \
     -exec sed -i "s|;*\s*group\s*=\s*.*|group = ${PHP_FPM_GROUP}|g" {} \; \
     -exec sed -i "s|;*\s*log_level\s*=\s*.*|log_level = notice|g" {} \; 
 
+RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
+        # install dependencies
+        apk update \
+        && apk add --no-cache php84 php84-dev php84-pear php84-pdo php84-openssl autoconf make g++ unixodbc-dev \
+        # The following symbolic links are optional but useful
+        && ln -s /usr/bin/php84 /usr/bin/php \
+        && ln -s /usr/bin/phpize84 /usr/bin/phpize \
+        && ln -s /usr/bin/pecl84 /usr/bin/pecl \
+        && ln -s /usr/bin/php-config84 /usr/bin/php-config ; \
+    fi
+
 # Install Microsoft ODBC Driver for SQL Server（only for amd64 and arm64 architecture）
 # see more: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16#alpine
 RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
@@ -145,6 +156,17 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         && apk del --no-cache gnupg; \
     else \
         echo "Skipping Microsoft ODBC Driver install for $TARGETARCH"; \
+    fi
+
+#  Install the PHP drivers for Microsoft SQL Server (Alpine)（only for amd64 and arm64 architecture）
+RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
+        pecl install sqlsrv \
+        && pecl install pdo_sqlsrv \
+        && echo extension=pdo_sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/10_pdo_sqlsrv.ini \
+        && echo extension=sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/20_sqlsrv.ini ; \
+        && php -m | grep -E 'pdo_sqlsrv' \
+        && php -m | grep -E 'sqlsrv' \
+        && php -m | grep -E 'odbc' ; \
     fi
 
 # Enable CAP_NET_BIND_SERVICE

@@ -124,6 +124,19 @@ RUN set -eux \
     && rm -rf /tmp/* \
     && rm -rf /var/tmp/*
 
+RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
+        set -eux \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
+        && php8.4 php8.4-dev php8.4-xml php8.4-intl php-pear build-essential unixodbc-dev \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
+        && rm -rf /var/lib/apt/lists/* \
+        && rm -rf /tmp/* \
+        && rm -rf /var/tmp/* \
+        ; \
+    fi 
+
 # Install Microsoft ODBC Driver for SQL Server（only for amd64 and arm64 architecture）
 # see more: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16#debian
 RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
@@ -161,6 +174,18 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         ; \
     else \
         echo "Skipping Microsoft ODBC Driver install for $TARGETARCH"; \
+    fi
+
+RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
+        set -eux \
+        && pecl install sqlsrv \
+        && pecl install pdo_sqlsrv \
+        && printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/8.4/mods-available/sqlsrv.ini \
+        && printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/8.4/mods-available/pdo_sqlsrv.ini \
+        && phpenmod -v 8.4 sqlsrv pdo_sqlsrv \
+        && php -m | grep -E 'pdo_sqlsrv' \
+        && php -m | grep -E 'sqlsrv' \
+        && php -m | grep -E 'odbc' ; \
     fi
 
 # Enable CAP_NET_BIND_SERVICE
