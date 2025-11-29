@@ -123,10 +123,10 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         apk update \
         && apk add --no-cache php84 php84-dev php84-pear php84-pdo php84-openssl autoconf make g++ unixodbc-dev \
         # The following symbolic links are optional but useful
-        && ln -s /usr/bin/php84 /usr/bin/php \
-        && ln -s /usr/bin/phpize84 /usr/bin/phpize \
-        && ln -s /usr/bin/pecl84 /usr/bin/pecl \
-        && ln -s /usr/bin/php-config84 /usr/bin/php-config ; \
+        && ln -sf /usr/bin/php84 /usr/bin/php \
+        && ln -sf /usr/bin/phpize84 /usr/bin/phpize \
+        && ln -sf /usr/bin/pecl84 /usr/bin/pecl \
+        && ln -sf /usr/bin/php-config84 /usr/bin/php-config ; \
     fi
 
 # Install Microsoft ODBC Driver for SQL Server（only for amd64 and arm64 architecture）
@@ -162,8 +162,10 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
 RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         pecl install sqlsrv \
         && pecl install pdo_sqlsrv \
+        && pecl install mongodb \
         && echo extension=pdo_sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/10_pdo_sqlsrv.ini \
-        && echo extension=sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/20_sqlsrv.ini ; \
+        && echo extension=sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/20_sqlsrv.ini \
+        && echo extension=mongodb.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/30_mongodb.ini ; \
         && php -m | grep -E 'pdo_sqlsrv' ; \
         && php -m | grep -E 'sqlsrv' ; \
         && php -m | grep -E 'odbc' ; \
