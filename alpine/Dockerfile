@@ -169,6 +169,10 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         && php -m | grep -E 'odbc' ; \
     fi
 
+# Composer install elasticsearch/elasticsearch
+RUN composer --no-interaction require elasticsearch/elasticsearch \
+    && composer --no-interaction show elasticsearch/elasticsearch
+
 # Enable CAP_NET_BIND_SERVICE
 # RUN if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \
     # setcap 'cap_net_bind_service=+ep' `which nginx`; \
