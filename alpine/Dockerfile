@@ -171,7 +171,9 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
 
 # Composer install elasticsearch/elasticsearch
 RUN composer --no-interaction require elasticsearch/elasticsearch \
-    && composer --no-interaction show elasticsearch/elasticsearch
+    && composer --no-interaction show elasticsearch/elasticsearch \
+    && composer --no-interaction require vulcanphp/simpledb \
+    && composer --no-interaction show vulcanphp/simpledb
 
 # Enable CAP_NET_BIND_SERVICE
 # RUN if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \
