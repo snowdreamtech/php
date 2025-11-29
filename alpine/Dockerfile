@@ -162,12 +162,10 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
 RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         pecl install sqlsrv \
         && pecl install pdo_sqlsrv \
-        && pecl install mongodb \
         && echo extension=pdo_sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/10_pdo_sqlsrv.ini \
         && echo extension=sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/20_sqlsrv.ini \
-        && echo extension=mongodb.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/30_mongodb.ini ; \
-        && php -m | grep -E 'pdo_sqlsrv' ; \
-        && php -m | grep -E 'sqlsrv' ; \
+        && php -m | grep -E 'pdo_sqlsrv' \
+        && php -m | grep -E 'sqlsrv' \
         && php -m | grep -E 'odbc' ; \
     fi
 
