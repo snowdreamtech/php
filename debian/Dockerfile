@@ -128,7 +128,7 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         set -eux \
         && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
         && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
-        && php8.4 php8.4-dev php8.4-xml php8.4-intl php-pear build-essential unixodbc-dev \
+        php8.4 php8.4-dev php8.4-xml php8.4-intl php-pear build-essential unixodbc-dev \
         && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
         && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
         && rm -rf /var/lib/apt/lists/* \
@@ -180,13 +180,11 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         set -eux \
         && pecl install sqlsrv \
         && pecl install pdo_sqlsrv \
-        && pecl install mongodb \
         && printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/8.4/mods-available/sqlsrv.ini \
         && printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/8.4/mods-available/pdo_sqlsrv.ini \
-        && printf "; priority=40\nextension=mongodb.so\n" > /etc/php/8.4/mods-available/mongodb.ini \
-        && phpenmod -v 8.4 sqlsrv pdo_sqlsrv mongodb \
-        && php -m | grep -E 'pdo_sqlsrv' ; \
-        && php -m | grep -E 'sqlsrv' ; \
+        && phpenmod -v 8.4 sqlsrv pdo_sqlsrv \
+        && php -m | grep -E 'pdo_sqlsrv' \
+        && php -m | grep -E 'sqlsrv' \
         && php -m | grep -E 'odbc' ; \
     fi
 
