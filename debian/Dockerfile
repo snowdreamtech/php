@@ -1,4 +1,4 @@
-FROM snowdreamtech/debian:13.1.0
+FROM snowdreamtech/nginx:1.26.3-trixie
 
 # OCI annotations to image
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
@@ -62,8 +62,8 @@ ENV PHP_VERSION=2:8.4+96 \
     PHP_ERROR_REPORTING="E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR" \
     PHP_CGI_FIX_PATHINFO=0
 
-ENV PHP_FPM_USER="root" \
-    PHP_FPM_GROUP="root" \
+ENV PHP_FPM_USER="www-data" \
+    PHP_FPM_GROUP="www-data" \
     PHP_FPM_HOST="127.0.0.1" \
     PHP_FPM_PORT=9000 \
     PHP_FPM_LISTEN_MODE="0660"
@@ -201,7 +201,11 @@ RUN composer --no-interaction require elasticsearch/elasticsearch \
 #     # setcap 'cap_net_bind_service=+ep' `which nginx`; \
 #     fi
 
-EXPOSE 9000
+COPY default.conf /etc/nginx/conf.d
+
+COPY index.php /var/lib/nginx/html
+
+EXPOSE 9000 80 443
 
 COPY entrypoint.d /usr/local/bin/entrypoint.d
 
