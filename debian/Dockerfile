@@ -51,11 +51,12 @@ ENV DEBIAN_FRONTEND=${DEBIAN_FRONTEND} \
     WORKDIR=${WORKDIR} 
 
 ENV PHP_VERSION=2:8.4+96 \ 
-    PHP_MEMORY_LIMIT="512M" \
-    PHP_MAX_UPLOAD="100M" \
+    PHP_MEMORY_LIMIT="1G" \
+    PHP_MAX_UPLOAD="2G" \
     PHP_MAX_FILE_UPLOAD="200" \
-    PHP_MAX_POST="100M" \
+    PHP_MAX_POST="2.1G" \
     PHP_MAX_EXECUTION_TIME=600 \
+    PHP_MAX_INPUT_TIME=600 \
     PHP_DISPLAY_ERRORS="Off" \
     PHP_DISPLAY_STARTUP_ERRORS="Off" \
     PHP_ERROR_REPORTING="E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR" \
@@ -100,6 +101,7 @@ RUN set -eux \
     -exec sed -i "s|;*\s*upload_max_filesize =\s*.*|upload_max_filesize = ${PHP_MAX_UPLOAD}|g" {} \; \
     -exec sed -i "s|;*\s*max_file_uploads =\s*.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|g" {} \; \
     -exec sed -i "s|;*\s*max_execution_time =\s*.*|max_execution_time = ${PHP_MAX_EXECUTION_TIME}|g" {} \; \
+    -exec sed -i "s|;*\s*max_input_time =\s*.*|max_input_time = ${PHP_MAX_INPUT_TIME}|g" {} \; \
     -exec sed -i "s|;*\s*post_max_size =\s*.*|post_max_size = ${PHP_MAX_POST}|g" {} \; \
     -exec sed -i "s|;*\s*cgi.fix_pathinfo=\s*.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|g" {} \; \
     # Modifying configuration file www.conf
