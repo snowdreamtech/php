@@ -68,11 +68,15 @@ ENV PHP_FPM_USER="root" \
     PHP_FPM_PORT=9000 \
     PHP_FPM_LISTEN_MODE="0660"
 
+ARG TARGETARCH
+ENV TARGETARCH=${TARGETARCH}
+
+
 # Create a user with PUID and PGID
 RUN if [ "${USER}" != "root" ] && [ ! -d "/home/${USER}" ] && [ "${PUID}" -ne 0 ] && [ "${PGID}" -ne 0 ]; then \
     addgroup --gid ${PGID} ${USER}; \
     adduser --home /home/${USER} --uid ${PUID} --gid ${PGID} --gecos ${USER} --shell /bin/bash --disabled-password ${USER}; \
-    # sed -i "/%sudo/c ${USER} ALL=(ALL:ALL) NOPASSWD:ALL" /etc/sudoers; \
+    # sed -i "/%/c ${USER} ALL=(ALL:ALL) NOPASSWD:ALL" /etc/ers; \
     fi
     
 RUN set -eux \
@@ -119,6 +123,45 @@ RUN set -eux \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
     && rm -rf /var/tmp/*
+
+# Install Microsoft ODBC Driver for SQL Server（only for amd64 and arm64 architecture）
+# see more: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16#debian
+RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
+        set -eux \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
+        curl gnupg \
+        && os_version=12\
+        # && os_version=$(grep VERSION_ID /etc/os-release | cut -d '"' -f 2 | cut -d '.' -f 1) \
+        # Download the package to configure the Microsoft repo
+        && curl -sSL -O https://packages.microsoft.com/config/debian/$os_version/packages-microsoft-prod.deb \
+        # Install the package
+        && dpkg -i packages-microsoft-prod.deb \
+        # Delete the file
+        && rm packages-microsoft-prod.deb \
+        # Install the Microsoft ODBC Driver for SQL Server
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy update  \
+        && ACCEPT_EULA=Y apt-get install -y msodbcsql18 \
+        # optional: for bcp and sqlcmd
+        && ACCEPT_EULA=Y apt-get install -y mssql-tools18 \
+        && dpkg -l | grep msodbcsql18 \
+        && dpkg -l | grep mssql-tools18 \
+        # Add /opt/mssql-tools/bin/ to PATH environment variable
+        && echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc \
+        && . ~/.bashrc \
+        # optional: for unixODBC development headers
+        && apt-get install -y unixodbc-dev \
+        # optional: kerberos library for debian-slim distributions
+        && apt-get install -y libgssapi-krb5-2 \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
+        && rm -rf /var/lib/apt/lists/* \
+        && rm -rf /tmp/* \
+        && rm -rf /var/tmp/* \
+        ; \
+    else \
+        echo "Skipping Microsoft ODBC Driver install for $TARGETARCH"; \
+    fi
 
 # Enable CAP_NET_BIND_SERVICE
 # RUN if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \

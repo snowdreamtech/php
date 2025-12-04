@@ -66,6 +66,9 @@ ENV PHP_FPM_USER="root" \
     PHP_FPM_PORT=9000 \
     PHP_FPM_LISTEN_MODE="0660"
 
+ARG TARGETARCH
+ENV TARGETARCH=${TARGETARCH}
+
 # Create a user with PUID and PGID
 RUN if [ "${USER}" != "root" ] && [ ! -d "/home/${USER}" ] && [ "${PUID}" -ne 0 ] && [ "${PGID}" -ne 0 ]; then \
     addgroup -g ${PGID} ${USER}; \
@@ -114,6 +117,36 @@ RUN sed -i '3,$d' /etc/apk/repositories \
     -exec sed -i "s|;*\s*user\s*=\s*.*|user = ${PHP_FPM_USER}|g" {} \; \
     -exec sed -i "s|;*\s*group\s*=\s*.*|group = ${PHP_FPM_GROUP}|g" {} \; \
     -exec sed -i "s|;*\s*log_level\s*=\s*.*|log_level = notice|g" {} \; 
+
+# Install Microsoft ODBC Driver for SQL Server（only for amd64 and arm64 architecture）
+# see more: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16#alpine
+RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
+        && architecture=$TARGETARCH \
+        # install dependencies
+        && apk update \
+        && apk add --no-cache curl gnupg \
+        # Download the desired package(s)
+        && curl -O https://download.microsoft.com/download/fae28b9a-d880-42fd-9b98-d779f0fdd77f/msodbcsql18_18.5.1.1-1_$architecture.apk \
+        && curl -O https://download.microsoft.com/download/7/6/d/76de322a-d860-4894-9945-f0cc5d6a45f8/mssql-tools18_18.4.1.1-1_$architecture.apk \
+        # (Optional) Verify signature, if 'gpg' is missing install it using 'apk add gnupg':
+        && curl -O https://download.microsoft.com/download/fae28b9a-d880-42fd-9b98-d779f0fdd77f/msodbcsql18_18.5.1.1-1_$architecture.sig \
+        && curl -O https://download.microsoft.com/download/7/6/d/76de322a-d860-4894-9945-f0cc5d6a45f8/mssql-tools18_18.4.1.1-1_$architecture.sig \
+        && curl https://packages.microsoft.com/keys/microsoft.asc  | gpg --import - \
+        && gpg --verify msodbcsql18_18.5.1.1-1_$architecture.sig msodbcsql18_18.5.1.1-1_$architecture.apk \
+        && gpg --verify mssql-tools18_18.4.1.1-1_$architecture.sig mssql-tools18_18.4.1.1-1_$architecture.apk \
+        # Install the package(s)
+        && apk add --allow-untrusted msodbcsql18_18.5.1.1-1_$architecture.apk \
+        && apk add --allow-untrusted mssql-tools18_18.4.1.1-1_$architecture.apk \
+        && apk info | grep msodbcsql18 \
+        && apk info | grep mssql-tools18 \
+        # Clean up
+        && rm -f msodbcsql18_18.5.1.1-1_$architecture.apk msodbcsql18_18.5.1.1-1_$architecture.sig \
+        && rm -f mssql-tools18_18.4.1.1-1_$architecture.apk mssql-tools18_18.4.1.1-1_$architecture.sig \
+        && apk del --no-cache gnupg \
+        ; \
+    else \
+        echo "Skipping Microsoft ODBC Driver install for $TARGETARCH"; \
+    fi
 
 # Enable CAP_NET_BIND_SERVICE
 # RUN if [ "${USER}" != "root" ] && [ "${CAP_NET_BIND_SERVICE}" -eq 1 ]; then \

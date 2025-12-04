@@ -88,3 +88,16 @@ docker buildx build -t snowdreamtech/php --platform=linux/386,linux/amd64,linux/
 ## License
 
 MIT
+
+This Docker image is distributed under the MIT License.  
+It includes **Microsoft ODBC Driver 18 for SQL Server**, which is **not open source**.  
+
+The Microsoft ODBC Driver is provided under Microsoft’s proprietary End User License Agreement (EULA).  
+By using this image, you agree to the terms of the Microsoft Software License for the ODBC Driver.  
+
+- The open-source parts of this image (scripts, Dockerfile, configuration) are licensed under MIT.  
+- The Microsoft ODBC Driver binaries are licensed separately by Microsoft.  
+- You may freely use this image in commercial environments, but the driver itself remains subject to Microsoft’s EULA.  
+
+For details, see Microsoft’s official documentation:  
+[ODBC Driver for SQL Server on Linux and macOS](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/system-requirements?view=sql-server-ver17)
