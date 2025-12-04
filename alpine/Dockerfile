@@ -182,9 +182,9 @@ RUN composer --no-interaction require elasticsearch/elasticsearch \
     # setcap 'cap_net_bind_service=+ep' `which nginx`; \
     # fi
     
-COPY default.conf /etc/nginx/http.d
+COPY default.conf /etc/nginx/http.d/default.conf
 
-COPY index.php /var/lib/nginx/html
+COPY index.php /var/lib/nginx/html/index.php
 
 EXPOSE 9000 80 443
 
