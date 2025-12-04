@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/php" \
     org.opencontainers.image.vendor="Snowdream Tech" \
-    org.opencontainers.image.version="8.2.26" \
+    org.opencontainers.image.version="8.4.11" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/php"
 
 # Switch to the user
@@ -50,7 +50,7 @@ ENV DEBIAN_FRONTEND=${DEBIAN_FRONTEND} \
     USER=${USER} \
     WORKDIR=${WORKDIR} 
 
-ENV PHP_VERSION=2:8.2+93 \ 
+ENV PHP_VERSION=2:8.4+96 \ 
     PHP_MEMORY_LIMIT="512M" \
     PHP_MAX_UPLOAD="100M" \
     PHP_MAX_FILE_UPLOAD="200" \
@@ -79,82 +79,82 @@ RUN set -eux \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \ 
     imagemagick \
     php=${PHP_VERSION} \
-    php8.2-amqp \
-    php8.2-apcu \
-    php8.2-ast \
-    php8.2-bcmath \
-    php8.2-bz2 \
-    php8.2-cgi \
-    php8.2-cli \
-    php8.2-common \
-    php8.2-curl \
-    php8.2-dba \
-    php8.2-dev \
-    php8.2-ds \
-    php8.2-enchant \
-    php8.2-fpm \
-    php8.2-gd \
-    php8.2-gearman \
-    # php8.2-gmagick \
-    php8.2-gmp \
-    php8.2-gnupg \
-    php8.2-http \
-    php8.2-igbinary \
-    php8.2-imagick \
-    php8.2-imap \
-    php8.2-interbase \
-    php8.2-intl \
-    php8.2-ldap \
-    php8.2-libvirt-php \
-    php8.2-mailparse \
-    php8.2-maxminddb \
-    php8.2-mbstring \
-    php8.2-mcrypt \
-    php8.2-memcache \
-    php8.2-memcached \
-    php8.2-mongodb \
-    php8.2-msgpack \
-    php8.2-mysql \
-    php8.2-oauth \
-    php8.2-odbc \
-    php8.2-opcache \
-    php8.2-pcov \
-    php8.2-pgsql \
-    php8.2-phpdbg \
-    php8.2-pinba \
-    php8.2-ps \
-    php8.2-pspell \
-    php8.2-psr \
-    php8.2-raphf \
-    php8.2-readline \
-    php8.2-redis \
-    php8.2-rrd \
-    php8.2-snmp \
-    php8.2-soap \
-    php8.2-solr \
-    php8.2-sqlite3 \
-    php8.2-ssh2 \
-    php8.2-stomp \
-    php8.2-sybase \
-    php8.2-tideways \
-    php8.2-tidy \
-    # php8.2-uopz \
-    php8.2-uploadprogress \
-    php8.2-uuid \
-    php8.2-xdebug \
-    php8.2-xml \
-    php8.2-xmlrpc \
-    php8.2-xsl \
-    # php8.2-yac \
-    php8.2-yaml \
-    php8.2-zip \
-    php8.2-zmq \
+    php8.4-amqp \
+    php8.4-apcu \
+    php8.4-ast \
+    php8.4-bcmath \
+    php8.4-bz2 \
+    php8.4-cgi \
+    php8.4-cli \
+    php8.4-common \
+    php8.4-curl \
+    php8.4-dba \
+    php8.4-dev \
+    php8.4-ds \
+    php8.4-enchant \
+    php8.4-fpm \
+    php8.4-gd \
+    php8.4-gearman \
+    # php8.4-gmagick \
+    php8.4-gmp \
+    php8.4-gnupg \
+    php8.4-http \
+    php8.4-igbinary \
+    php8.4-imagick \
+    # php8.4-imap \
+    php8.4-interbase \
+    php8.4-intl \
+    php8.4-ldap \
+    php8.4-libvirt-php \
+    php8.4-mailparse \
+    php8.4-maxminddb \
+    php8.4-mbstring \
+    php8.4-mcrypt \
+    php8.4-memcache \
+    php8.4-memcached \
+    php8.4-mongodb \
+    php8.4-msgpack \
+    php8.4-mysql \
+    php8.4-oauth \
+    php8.4-odbc \
+    php8.4-opcache \
+    php8.4-pcov \
+    php8.4-pgsql \
+    php8.4-phpdbg \
+    # php8.4-pinba \
+    php8.4-ps \
+    php8.4-pspell \
+    php8.4-psr \
+    php8.4-raphf \
+    php8.4-readline \
+    php8.4-redis \
+    php8.4-rrd \
+    php8.4-snmp \
+    php8.4-soap \
+    php8.4-solr \
+    php8.4-sqlite3 \
+    php8.4-ssh2 \
+    php8.4-stomp \
+    php8.4-sybase \
+    # php8.4-tideways \
+    php8.4-tidy \
+    # php8.4-uopz \
+    php8.4-uploadprogress \
+    php8.4-uuid \
+    php8.4-xdebug \
+    php8.4-xml \
+    php8.4-xmlrpc \
+    php8.4-xsl \
+    # php8.4-yac \
+    php8.4-yaml \
+    php8.4-zip \
+    php8.4-zmq \
     && mkdir -p /run/php \
-    && touch /run/php/php8.2-fpm.pid \
-    && touch /var/log/php8.2-fpm.log \
-    && ln -sf `which php8.2` /usr/bin/php \
-    && ln -sf `which php-fpm8.2` /usr/bin/php-fpm \
-    && ln -sf `which php-cgi8.2` /usr/bin/php-cgi \
+    && touch /run/php/php8.4-fpm.pid \
+    && touch /var/log/php8.4-fpm.log \
+    && ln -sf `which php8.4` /usr/bin/php \
+    && ln -sf `which php-fpm8.4` /usr/bin/php-fpm \
+    && ln -sf `which php-cgi8.4` /usr/bin/php-cgi \
     # Installing composer
     && wget -c https://getcomposer.org/installer -O composer-setup.php \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
