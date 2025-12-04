@@ -180,9 +180,11 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         set -eux \
         && pecl install sqlsrv \
         && pecl install pdo_sqlsrv \
+        && pecl install mongodb \
         && printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/8.4/mods-available/sqlsrv.ini \
         && printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/8.4/mods-available/pdo_sqlsrv.ini \
-        && phpenmod -v 8.4 sqlsrv pdo_sqlsrv \
+        && printf "; priority=40\nextension=mongodb.so\n" > /etc/php/8.4/mods-available/mongodb.ini \
+        && phpenmod -v 8.4 sqlsrv pdo_sqlsrv mongodb \
         && php -m | grep -E 'pdo_sqlsrv' ; \
         && php -m | grep -E 'sqlsrv' ; \
         && php -m | grep -E 'odbc' ; \
