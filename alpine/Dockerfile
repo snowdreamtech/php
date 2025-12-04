@@ -72,9 +72,17 @@ RUN if [ "${USER}" != "root" ] && [ ! -d "/home/${USER}" ] && [ "${PUID}" -ne 0 
     # sed -i "/%sudo/c ${USER} ALL=(ALL:ALL) NOPASSWD:ALL" /etc/sudoers; \
     fi
     
-RUN apk add --no-cache \
+RUN sed -i '3,$d' /etc/apk/repositories \
+    && apk update \
+    && apk add --no-cache \
     php84=${PHP_VERSION} \
-    php84-* \
+    && apk search php84- \
+    | awk -F'-[0-9]' '{print $1}' \
+    | grep -Ev 'php84-yac|php84-gmagick' \
+    | xargs apk add --no-cache \
+    && echo "@main https://dl-cdn.alpinelinux.org/alpine/edge/main" | tee -a /etc/apk/repositories \
+    && echo "@community https://dl-cdn.alpinelinux.org/alpine/edge/community" | tee -a /etc/apk/repositories \
+    && echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" | tee -a /etc/apk/repositories \
     && ln -sf `which php84` /usr/bin/php \
     && ln -sf `which php-fpm84` /usr/bin/php-fpm \
     && ln -sf `which php-cgi84` /usr/bin/php-cgi \
