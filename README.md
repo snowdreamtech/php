@@ -1,15 +1,15 @@
-# Base
+# PHP
 
 ![Docker Image Version](https://img.shields.io/docker/v/snowdreamtech/php)
 ![Docker Image Size](https://img.shields.io/docker/image-size/snowdreamtech/php/latest)
 ![Docker Pulls](https://img.shields.io/docker/pulls/snowdreamtech/php)
 ![Docker Stars](https://img.shields.io/docker/stars/snowdreamtech/php)
 
-Docker base template providing standardized container foundations with flexible entrypoint systems, multi-architecture support, and consistent configuration patterns across Alpine, Debian, and Rocky Linux distributions.
+Docker PHP image providing standardized container foundations with flexible entrypoint systems, multi-architecture support, and consistent configuration patterns across Alpine, Debian, and Rocky Linux distributions.
 
 ## Overview
 
-The Docker base template serves as a foundational starting point for building containerized applications. It provides:
+The Docker PHP image serves as a foundational starting point for building containerized applications. It provides:
 
 - **Standardized Dockerfiles** with OCI annotations and best practices
 - **Flexible entrypoint system** supporting custom initialization scripts
@@ -23,7 +23,7 @@ The Docker base template serves as a foundational starting point for building co
 ```bash
 # Pull and run the default Debian variant
 docker pull snowdreamtech/php:debian
-docker run -d --name=base -e TZ=Asia/Shanghai snowdreamtech/php:debian
+docker run -d --name=php -e TZ=Asia/Shanghai snowdreamtech/php:debian
 
 # Or use docker-compose
 docker-compose up -d
@@ -37,7 +37,7 @@ The recommended variant for most use cases, providing wide compatibility and ext
 
 ```bash
 docker run -d \
-  --name=base \
+  --name=php \
   -e TZ=Asia/Shanghai \
   --restart unless-stopped \
   snowdreamtech/php:debian
@@ -53,7 +53,7 @@ Lightweight variant optimized for minimal image size and fast startup times.
 
 ```bash
 docker run -d \
-  --name=base \
+  --name=php \
   -e TZ=Asia/Shanghai \
   --restart unless-stopped \
   snowdreamtech/php:alpine
@@ -69,7 +69,7 @@ Enterprise-focused variant based on Rocky Linux, ideal for production environmen
 
 ```bash
 docker run -d \
-  --name=base \
+  --name=php \
   -e TZ=Asia/Shanghai \
   --restart unless-stopped \
   snowdreamtech/php:rocky
@@ -164,7 +164,7 @@ Or at runtime (requires rebuilding the image):
 
 ```bash
 docker run -d \
-  --name=base \
+  --name=php \
   -e PUID=1000 \
   -e PGID=1000 \
   -e USER=appuser \
@@ -179,9 +179,9 @@ docker run -d \
 
 ```yaml
 services:
-  base:
+  php:
     image: snowdreamtech/php:debian
-    container_name: base
+    container_name: php
     environment:
       - TZ=Asia/Shanghai
     restart: unless-stopped
@@ -191,9 +191,9 @@ services:
 
 ```yaml
 services:
-  base:
+  php:
     image: snowdreamtech/php:debian
-    container_name: base
+    container_name: php
     environment:
       - TZ=Asia/Shanghai
       - DEBUG=true
@@ -233,7 +233,7 @@ Docker automatically selects the appropriate architecture for your platform when
 
 ## Entrypoint System
 
-The base template includes a flexible entrypoint system that executes custom initialization scripts before starting your application.
+The PHP image includes a flexible entrypoint system that executes custom initialization scripts before starting your application.
 
 ### How It Works
 
@@ -288,24 +288,24 @@ Output example:
 make build
 
 # Build specific variant
-docker build -t base:debian ./docker/debian/
-docker build -t base:alpine ./docker/alpine/
-docker build -t base:rocky ./docker/rocky/
+docker build -t php:debian ./docker/debian/
+docker build -t php:alpine ./docker/alpine/
+docker build -t php:rocky ./docker/rocky/
 ```
 
 ### Testing
 
 ```bash
 # Test default configuration
-docker run --rm base:debian id
+docker run --rm php:debian id
 
 # Test custom user creation
-docker build --build-arg PUID=1000 --build-arg PGID=1000 --build-arg USER=testuser -t base:debian-test ./docker/debian/
-docker run --rm base:debian-test id
+docker build --build-arg PUID=1000 --build-arg PGID=1000 --build-arg USER=testuser -t php:debian-test ./docker/debian/
+docker run --rm php:debian-test id
 # Expected: uid=1000(testuser) gid=1000(testuser)
 
 # Test DEBUG mode
-docker run --rm -e DEBUG=true base:debian
+docker run --rm -e DEBUG=true php:debian
 ```
 
 ## Reference
@@ -317,7 +317,7 @@ docker run --rm -e DEBUG=true base:debian
 5. [Faster Multi-Platform Builds: Dockerfile Cross-Compilation Guide](https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/)
 6. [docker/buildx](https://github.com/docker/buildx)
 
-## Contact (备注：base)
+## Contact (备注：php)
 
 * Email: <sn0wdr1am@qq.com>
 * QQ: 3217680847
