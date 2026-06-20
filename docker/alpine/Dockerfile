@@ -1,4 +1,4 @@
-# Base Image (Alpine Variant)
+# PHP Image (Alpine Variant)
 # Extends snowdreamtech/alpine with additional tooling and configuration.
 
 FROM snowdreamtech/alpine:3.24.0
@@ -16,21 +16,25 @@ ARG BUILDTIME \
     PGID=0 \
     PUID=0 \
     USER=root \
-    WORKDIR=/root
+    WORKDIR=/root \
+    PHP_VERSION=8.4.22-r0
 
 # Standard OCI Metadata (https://github.com/opencontainers/image-spec)
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
-    org.opencontainers.image.title="Base Image Based On Alpine" \
-    org.opencontainers.image.description="Docker Images for Base on Alpine. (i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x)" \
-    org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/base" \
-    org.opencontainers.image.base.name="snowdreamtech/base:alpine" \
+    org.opencontainers.image.title="PHP Image Based On Alpine" \
+    org.opencontainers.image.description="Docker Images for PHP on Alpine. (i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x)" \
+    org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/php" \
+    org.opencontainers.image.base.name="snowdreamtech/alpine:3.24.0" \
     org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.source="https://github.com/snowdreamtech/base" \
+    org.opencontainers.image.source="https://github.com/snowdreamtech/php" \
     org.opencontainers.image.vendor="Snowdream Tech" \
-    org.opencontainers.image.version="${VERSION:-3.24.0}" \
     org.opencontainers.image.created="${BUILDTIME}" \
     org.opencontainers.image.revision="${REVISION}" \
-    org.opencontainers.image.url="https://github.com/snowdreamtech/base"
+    org.opencontainers.image.url="https://github.com/snowdreamtech/php"
+
+# x-release-please-start-version
+LABEL org.opencontainers.image.version="${VERSION:-8.4.22}"
+# x-release-please-end
 
 # Runtime Environment Configuration
 ENV KEEPALIVE=${KEEPALIVE} \
@@ -42,12 +46,13 @@ ENV KEEPALIVE=${KEEPALIVE} \
     PGID=${PGID} \
     PUID=${PUID} \
     USER=${USER} \
-    WORKDIR=${WORKDIR}
+    WORKDIR=${WORKDIR} \
+    PHP_VERSION=${PHP_VERSION}
 
-# Additional tooling and configuration for Base image
+# Additional tooling and configuration for PHP image
 RUN apk update \
     && apk add --no-cache \
-    vim
+    php84=~${PHP_VERSION}
 
 # Container Orchestration Files
 COPY entrypoint.d /usr/local/bin/entrypoint.d
