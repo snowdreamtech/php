@@ -20,7 +20,7 @@
       "release-type": "simple",
       "component": "debian",
       "include-component-in-tag": true,
-      "release-as": "8.4.22",
+      "release-as": "8.4.16",
       "changelog-path": "CHANGELOG.md",
       "exclude-paths": ["docker/debian/CHANGELOG.md"],
       "extra-files": [

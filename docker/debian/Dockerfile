@@ -18,7 +18,7 @@ ARG BUILDTIME \
     PUID=0 \
     USER=root \
     WORKDIR=/root \
-    PHP_VERSION=8.4.22-1
+    PHP_VERSION=8.4.16-1~deb13u1
 
 # Standard OCI Metadata (https://github.com/opencontainers/image-spec)
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
@@ -34,7 +34,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/php"
 
 # x-release-please-start-version
-LABEL org.opencontainers.image.version="${VERSION:-8.4.22}"
+LABEL org.opencontainers.image.version="${VERSION:-8.4.16}"
 # x-release-please-end
 
 # Runtime Environment Configuration
