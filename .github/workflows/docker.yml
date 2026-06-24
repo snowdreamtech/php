@@ -67,7 +67,7 @@ permissions:
 
 jobs:
   buildx:
-    name: "🚀 Build & Deliver (${{ matrix.variant }})"
+    name: "🚀 Build & Deliver (${{ matrix.flavor }}-${{ matrix.variant }})"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -96,7 +96,7 @@ jobs:
             is_latest: false
             package_manager: dnf
     concurrency:
-      group: docker-${{ github.workflow }}-${{ github.event_name == 'schedule' && 'nightly' || github.ref }}-${{ matrix.variant }}
+      group: docker-${{ github.workflow }}-${{ github.event_name == 'schedule' && 'nightly' || github.ref }}-${{ matrix.flavor }}-${{ matrix.variant }}
       cancel-in-progress: ${{ github.event_name != 'schedule' }}
     permissions:
       contents: read
@@ -368,10 +368,10 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           annotations: ${{ steps.meta.outputs.annotations }}
           cache-from: |
-            type=gha,scope=${{ github.ref_name }}-${{ matrix.variant }}
-            type=gha,scope=main-${{ matrix.variant }}
-            type=gha,scope=dev-${{ matrix.variant }}
-          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.variant }}
+            type=gha,scope=${{ github.ref_name }}-${{ matrix.flavor }}-${{ matrix.variant }}
+            type=gha,scope=main-${{ matrix.flavor }}-${{ matrix.variant }}
+            type=gha,scope=dev-${{ matrix.flavor }}-${{ matrix.variant }}
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.flavor }}-${{ matrix.variant }}
 
       - name: "📈 Analyze Build Cache Performance"
         id: cache-stats
