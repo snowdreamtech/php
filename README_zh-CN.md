@@ -270,7 +270,7 @@ docker run -e DEBUG=true snowdreamtech/php:debian
 
 ```
 → [ENTRYPOINT] Executing all scripts in /usr/local/bin/entrypoint.d
-→ Running /usr/local/bin/entrypoint.d/10-base-init.sh
+→ Running /usr/local/bin/entrypoint.d/20-my-init.sh
 → [ENTRYPOINT] Done.
 ```
 
