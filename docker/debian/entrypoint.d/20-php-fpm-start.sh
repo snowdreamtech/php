@@ -10,7 +10,7 @@ fi
 
 FPM_CONF=$(find /etc -name "php-fpm.conf" | head -n 1)
 if [ -n "$FPM_CONF" ]; then
-  "$PHP_FPM_BIN" --fpm-config "$FPM_CONF"
+  "$PHP_FPM_BIN" --allow-to-run-as-root --fpm-config "$FPM_CONF"
 else
-  "$PHP_FPM_BIN"
+  "$PHP_FPM_BIN" --allow-to-run-as-root
 fi
