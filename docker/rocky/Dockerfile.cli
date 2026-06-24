@@ -1,7 +1,7 @@
-# PHP Image (Alpine Variant)
-# Extends snowdreamtech/alpine with additional tooling and configuration.
+# PHP Image (Rocky Variant)
+# Extends snowdreamtech/rocky with additional tooling and configuration.
 
-FROM snowdreamtech/alpine:3.24.0
+FROM snowdreamtech/rocky:10.2.0
 
 # Build-time Configuration
 ARG BUILDTIME \
@@ -17,14 +17,14 @@ ARG BUILDTIME \
     PUID=0 \
     USER=root \
     WORKDIR=/root \
-    PHP_VERSION=8.4.22-r0
+    PHP_VERSION=8.4.21-1.el10_2
 
 # Standard OCI Metadata (https://github.com/opencontainers/image-spec)
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
-    org.opencontainers.image.title="PHP Image Based On Alpine" \
-    org.opencontainers.image.description="Docker Images for PHP on Alpine. (i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x)" \
+    org.opencontainers.image.title="PHP Image Based On Rocky" \
+    org.opencontainers.image.description="Docker Images for PHP on Rocky. (i386, amd64, arm32v5, arm32v7, arm64, mips64le, ppc64le, s390x)" \
     org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/php" \
-    org.opencontainers.image.base.name="snowdreamtech/alpine:3.24.0" \
+    org.opencontainers.image.base.name="snowdreamtech/rocky:10.2.0" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/php" \
     org.opencontainers.image.vendor="Snowdream Tech" \
@@ -33,7 +33,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/php"
 
 # x-release-please-start-version
-LABEL org.opencontainers.image.version="${VERSION:-8.4.22}"
+LABEL org.opencontainers.image.version="${VERSION:-8.4.21}"
 # x-release-please-end
 
 # Runtime Environment Configuration
@@ -50,14 +50,21 @@ ENV KEEPALIVE=${KEEPALIVE} \
     PHP_VERSION=${PHP_VERSION}
 
 # Additional tooling and configuration for PHP image
-RUN apk update \
-    && apk add --no-cache \
-    php84=~${PHP_VERSION}
+RUN set -eux \
+    && dnf -y --allowerasing update \
+    && dnf -y --allowerasing install \
+    php8.4-cli-${PHP_VERSION} \
+    && dnf -y --allowerasing autoremove \
+    && dnf -y --allowerasing clean all \
+    && rm -rf /var/cache/dnf \
+    && rm -rf /tmp/* \
+    && rm -rf /var/tmp/*
 
 # Container Orchestration Files
 COPY entrypoint.d /usr/local/bin/entrypoint.d
 
-RUN chmod +x /usr/local/bin/entrypoint.d/*
+RUN chmod +x /usr/local/bin/entrypoint.d/* \
+    && rm -f /usr/local/bin/entrypoint.d/*php*
 
 # Standard Healthcheck (Verification of core system responsiveness)
 HEALTHCHECK NONE
@@ -66,4 +73,4 @@ HEALTHCHECK NONE
 USER root
 WORKDIR /root
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["/bin/sh"]
+CMD ["/bin/bash"]

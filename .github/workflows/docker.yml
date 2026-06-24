@@ -72,6 +72,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        flavor: [cli, cgi, fpm]
+        variant: [alpine, debian, rocky]
         include:
           - variant: alpine
             version: "3.24.0"
@@ -296,7 +298,19 @@ jobs:
             exit 1
           fi
 
-      - name: "🏷️ Generate Docker Metadata"
+      - name: "🏷️ Compute Tag Suffixes"
+        id: tag-suffix
+        if: steps.variant-filter.outputs.skip != 'true'
+        run: |
+          if [ "${{ matrix.flavor }}" = "cli" ]; then
+            echo "suffix=-${{ matrix.variant }}" >> $GITHUB_OUTPUT
+            echo "global_suffix=" >> $GITHUB_OUTPUT
+          else
+            echo "suffix=-${{ matrix.flavor }}-${{ matrix.variant }}" >> $GITHUB_OUTPUT
+            echo "global_suffix=-${{ matrix.flavor }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: "🏷️ Generate Docker Metadata" 
         if: steps.variant-filter.outputs.skip != 'true'
         id: meta
         uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9 # v6.1.0
@@ -311,25 +325,27 @@ jobs:
             suffix=
           tags: |
             # Branch builds (non-tag pushes) - variant-suffixed branch tag
-            type=ref,enable=${{ github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/') }},priority=600,prefix=,suffix=-${{ matrix.variant }},event=branch
+            type=ref,enable=${{ github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/') }},priority=600,prefix=,suffix=${{ steps.tag-suffix.outputs.suffix }},event=branch
             # Main/master branch - variant-suffixed tag
-            type=raw,enable=${{ contains(fromJSON('["refs/heads/main", "refs/heads/master"]'), github.ref) && github.event_name != 'schedule' }},priority=200,prefix=,suffix=-${{ matrix.variant }},value=latest
+            type=raw,enable=${{ contains(fromJSON('["refs/heads/main", "refs/heads/master"]'), github.ref) && github.event_name != 'schedule' }},priority=200,prefix=,suffix=${{ steps.tag-suffix.outputs.suffix }},value=latest
             # Main/master branch - global latest tag (only for is_latest variant, no suffix)
-            type=raw,enable=${{ matrix.is_latest && contains(fromJSON('["refs/heads/main", "refs/heads/master"]'), github.ref) && github.event_name != 'schedule' }},priority=200,prefix=,suffix=,value=latest
+            type=raw,enable=${{ matrix.is_latest && contains(fromJSON('["refs/heads/main", "refs/heads/master"]'), github.ref) && github.event_name != 'schedule' }},priority=200,prefix=,suffix=${{ steps.tag-suffix.outputs.global_suffix }},value=latest
             # Tag builds - variant-suffixed tag
-            type=raw,enable=${{ startsWith(github.ref, format('refs/tags/{0}-', matrix.variant)) }},priority=200,prefix=,suffix=-${{ matrix.variant }},value=latest
+            type=raw,enable=${{ startsWith(github.ref, format('refs/tags/{0}-', matrix.variant)) }},priority=200,prefix=,suffix=${{ steps.tag-suffix.outputs.suffix }},value=latest
             # Tag builds - global latest tag (only for is_latest variant, no suffix)
-            type=raw,enable=${{ matrix.is_latest && startsWith(github.ref, format('refs/tags/{0}-', matrix.variant)) }},priority=200,prefix=,suffix=,value=latest
+            type=raw,enable=${{ matrix.is_latest && startsWith(github.ref, format('refs/tags/{0}-', matrix.variant)) }},priority=200,prefix=,suffix=${{ steps.tag-suffix.outputs.global_suffix }},value=latest
             # Nightly builds - variant-suffixed
-            type=schedule,enable=true,priority=1000,prefix=,suffix=-${{ matrix.variant }},pattern=nightly
+            type=schedule,enable=true,priority=1000,prefix=,suffix=${{ steps.tag-suffix.outputs.suffix }},pattern=nightly
             # Nightly builds - global nightly tag (only for is_latest variant, no suffix)
-            type=schedule,enable=${{ matrix.is_latest }},priority=1000,prefix=,suffix=,pattern=nightly
+            type=schedule,enable=${{ matrix.is_latest }},priority=1000,prefix=,suffix=${{ steps.tag-suffix.outputs.global_suffix }},pattern=nightly
             # Date-based tags for traceability (YYYYMMDD) - variant-suffixed
-            type=schedule,enable=true,priority=900,prefix=,suffix=-${{ matrix.variant }},pattern={{date 'YYYYMMDD'}}
+            type=schedule,enable=true,priority=900,prefix=,suffix=${{ steps.tag-suffix.outputs.suffix }},pattern={{date 'YYYYMMDD'}}
             # Date-based tags - global tag (only for is_latest variant, no suffix)
-            type=schedule,enable=${{ matrix.is_latest }},priority=900,prefix=,suffix=,pattern={{date 'YYYYMMDD'}}
+            type=schedule,enable=${{ matrix.is_latest }},priority=900,prefix=,suffix=${{ steps.tag-suffix.outputs.global_suffix }},pattern={{date 'YYYYMMDD'}}
             # Semantic version tags from Release Please (variant-x.y.z) - variant-suffixed
-            type=match,enable=${{ startsWith(github.ref, format('refs/tags/{0}-', matrix.variant)) }},priority=800,prefix=,suffix=-${{ matrix.variant }},pattern=${{ matrix.variant }}-v?(\d+\.\d+\.\d+),group=1
+            type=match,enable=${{ startsWith(github.ref, format('refs/tags/{0}-', matrix.variant)) }},priority=800,prefix=,suffix=${{ steps.tag-suffix.outputs.suffix }},pattern=${{ matrix.variant }}-v?(\d+\.\d+\.\d+),group=1
+            # Semantic version tags - global tag (only for is_latest variant, no suffix)
+            type=match,enable=${{ matrix.is_latest && startsWith(github.ref, format('refs/tags/{0}-', matrix.variant)) }},priority=800,prefix=,suffix=${{ steps.tag-suffix.outputs.global_suffix }},pattern=${{ matrix.variant }}-v?(\d+\.\d+\.\d+),group=1
         env:
           DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
 
@@ -339,6 +355,7 @@ jobs:
         uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
         with:
           context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/Dockerfile.${{ matrix.flavor }}
           build-args: |
             BUILDTIME=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
             VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
