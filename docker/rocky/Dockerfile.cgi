@@ -65,7 +65,7 @@ ENV PHP_MEMORY_LIMIT="1G" \
 RUN set -eux \
     && dnf -y --allowerasing update \
     && dnf -y --allowerasing install \
-    php-cgi \
+    php8.4-cli-${PHP_VERSION} \
     && dnf -y --allowerasing autoremove \
     && dnf -y --allowerasing clean all \
     && rm -rf /var/cache/dnf \

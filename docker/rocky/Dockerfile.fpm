@@ -71,7 +71,7 @@ ENV PHP_FPM_USER="root" \
 RUN set -eux \
     && dnf -y --allowerasing update \
     && dnf -y --allowerasing install \
-    php-fpm \
+    php8.4-fpm-${PHP_VERSION} \
     && dnf -y --allowerasing autoremove \
     && dnf -y --allowerasing clean all \
     && rm -rf /var/cache/dnf \

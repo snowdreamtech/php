@@ -53,7 +53,7 @@ ENV KEEPALIVE=${KEEPALIVE} \
 RUN set -eux \
     && dnf -y --allowerasing update \
     && dnf -y --allowerasing install \
-    php-cli \
+    php8.4-cli-${PHP_VERSION} \
     && dnf -y --allowerasing autoremove \
     && dnf -y --allowerasing clean all \
     && rm -rf /var/cache/dnf \

@@ -64,8 +64,8 @@ ENV PHP_MEMORY_LIMIT="1G" \
 # Additional tooling and configuration for PHP image
 RUN apk update \
     && apk add --no-cache \
-    php84=~${PHP_VERSION} \
-    php84-cgi=~${PHP_VERSION}
+    php84=${PHP_VERSION} \
+    php84-cgi=${PHP_VERSION}
 
 # Container Orchestration Files
 COPY entrypoint.d /usr/local/bin/entrypoint.d
