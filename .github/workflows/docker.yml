@@ -501,7 +501,14 @@ jobs:
                 printf '  ✓ User context: ' && id -un && \
                 printf '  ✓ Package manager: ' && \
                 ${pkg_check} && echo 'functional' && \
-                printf '  ✓ App version: ' && php -v && \
+                printf '  ✓ App version: ' && \
+                if [ \"\${{ matrix.flavor }}\" = \"cli\" ]; then \
+                  php -v; \
+                elif [ \"\${{ matrix.flavor }}\" = \"cgi\" ]; then \
+                  (php-cgi -v || php-cgi8.4 -v || php84-cgi -v || php-cgi84 -v || php-cgi83 -v || php -v); \
+                elif [ \"\${{ matrix.flavor }}\" = \"fpm\" ]; then \
+                  (php-fpm -v || php-fpm8.4 -v || php84-fpm -v || php-fpm84 -v || php-fpm83 -v || php -v); \
+                fi && \
                 echo '  ✓ All checks passed'
               "; then
               return 0
