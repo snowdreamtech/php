@@ -86,7 +86,7 @@ RUN set -eux \
     php8.4-xml=${PHP_VERSION} \
     php8.4-zip=${PHP_VERSION} \
     php8.4-redis \
-    nginx
+    nginx \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
     && rm -rf /var/lib/apt/lists/* \
