@@ -72,6 +72,9 @@ RUN set -eux \
     php8.4-posix=${PHP_VERSION} \
     php8.4-exif=${PHP_VERSION} \
     php8.4-sockets=${PHP_VERSION} \
+    php8.4-apcu=${PHP_VERSION} \
+    php8.4-gmp=${PHP_VERSION} \
+    php8.4-soap=${PHP_VERSION} \
     php8.4-redis \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
