@@ -85,7 +85,9 @@ HEALTHCHECK NONE
 
 # Nginx Configuration
 COPY nginx /etc/nginx
-RUN mkdir -p /var/www/html
+RUN mkdir -p /var/www/html \
+    && ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Process Execution
 EXPOSE 80 443
