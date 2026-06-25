@@ -8,7 +8,7 @@ if [ -z "$PHP_FPM_BIN" ]; then
   exit 1
 fi
 
-FPM_CONF=$(find /etc -name "php-fpm.conf" | grep -v "/nginx/" | head -n 1)
+FPM_CONF=$(find /etc -name "php-fpm.conf" | grep -v "nginx" | head -n 1)
 if [ -n "$FPM_CONF" ]; then
   "$PHP_FPM_BIN" --allow-to-run-as-root --fpm-config "$FPM_CONF"
 else
