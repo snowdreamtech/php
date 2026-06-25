@@ -65,9 +65,33 @@ ENV PHP_MEMORY_LIMIT="1G" \
 RUN apk update \
     && apk add --no-cache \
     php84=${PHP_VERSION} \
-    php84-cgi=${PHP_VERSION}
+    php84-cgi=${PHP_VERSION} \
+    php84-bcmath=${PHP_VERSION} \
+    php84-curl=${PHP_VERSION} \
+    php84-gd=${PHP_VERSION} \
+    php84-intl=${PHP_VERSION} \
+    php84-mbstring=${PHP_VERSION} \
+    php84-mysqli=${PHP_VERSION} \
+    php84-mysqlnd=${PHP_VERSION} \
+    php84-opcache=${PHP_VERSION} \
+    php84-pdo_mysql=${PHP_VERSION} \
+    php84-pdo_pgsql=${PHP_VERSION} \
+    php84-pdo_sqlite=${PHP_VERSION} \
+    php84-pgsql=${PHP_VERSION} \
+    php84-sqlite3=${PHP_VERSION} \
+    php84-xml=${PHP_VERSION} \
+    php84-zip=${PHP_VERSION} \
+    php84-pcntl=${PHP_VERSION} \
+    php84-posix=${PHP_VERSION} \
+    php84-exif=${PHP_VERSION} \
+    php84-fileinfo=${PHP_VERSION} \
+    php84-iconv=${PHP_VERSION} \
+    php84-sockets=${PHP_VERSION} \
+    php84-sodium=${PHP_VERSION} \
+    php84-pecl-redis
 
 # Container Orchestration Files
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY entrypoint.d/*cgi* /usr/local/bin/entrypoint.d/
 
 RUN chmod +x /usr/local/bin/entrypoint.d/*

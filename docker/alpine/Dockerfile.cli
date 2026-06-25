@@ -52,9 +52,35 @@ ENV KEEPALIVE=${KEEPALIVE} \
 # Additional tooling and configuration for PHP image
 RUN apk update \
     && apk add --no-cache \
-    php84=${PHP_VERSION}
+    php84=${PHP_VERSION} \
+    php84-cli=${PHP_VERSION} \
+    php84-bcmath=${PHP_VERSION} \
+    php84-curl=${PHP_VERSION} \
+    php84-gd=${PHP_VERSION} \
+    php84-intl=${PHP_VERSION} \
+    php84-mbstring=${PHP_VERSION} \
+    php84-mysqli=${PHP_VERSION} \
+    php84-mysqlnd=${PHP_VERSION} \
+    php84-opcache=${PHP_VERSION} \
+    php84-pdo_mysql=${PHP_VERSION} \
+    php84-pdo_pgsql=${PHP_VERSION} \
+    php84-pdo_sqlite=${PHP_VERSION} \
+    php84-pgsql=${PHP_VERSION} \
+    php84-sqlite3=${PHP_VERSION} \
+    php84-xml=${PHP_VERSION} \
+    php84-zip=${PHP_VERSION} \
+    php84-pcntl=${PHP_VERSION} \
+    php84-posix=${PHP_VERSION} \
+    php84-exif=${PHP_VERSION} \
+    php84-fileinfo=${PHP_VERSION} \
+    php84-iconv=${PHP_VERSION} \
+    php84-sockets=${PHP_VERSION} \
+    php84-sodium=${PHP_VERSION} \
+    php84-pecl-redis
 
 # Container Orchestration Files
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 # Standard Healthcheck (Verification of core system responsiveness)
 HEALTHCHECK NONE
 
