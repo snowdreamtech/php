@@ -65,6 +65,7 @@ ENV PHP_MEMORY_LIMIT="1G" \
 RUN set -eux \
     && dnf -y --allowerasing update \
     && dnf -y --allowerasing install \
+    php8.4-cgi-${PHP_VERSION} \
     php8.4-cli-${PHP_VERSION} \
     php8.4-bcmath-${PHP_VERSION} \
     php8.4-common-${PHP_VERSION} \

@@ -72,6 +72,7 @@ RUN set -eux \
     && dnf -y --allowerasing update \
     && dnf -y --allowerasing install \
     php8.4-fpm-${PHP_VERSION} \
+    php8.4-cli-${PHP_VERSION} \
     php8.4-bcmath-${PHP_VERSION} \
     php8.4-common-${PHP_VERSION} \
     php8.4-gd-${PHP_VERSION} \
