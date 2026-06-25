@@ -34,4 +34,3 @@
 ### 📖 Documentation
 
 * remove redundant 10-base-init.sh references and physical files ([65b490f](https://github.com/snowdreamtech/php/commit/65b490f506c2ada537baafd08e5b5d8d6baafc3a))
-

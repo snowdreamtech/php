@@ -7,9 +7,7 @@
       "include-component-in-tag": true,
       "release-as": "8.4.22",
       "changelog-path": "CHANGELOG.md",
-      "exclude-paths": [
-        "docker/alpine/CHANGELOG.md"
-      ],
+      "exclude-paths": ["docker/alpine/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
@@ -29,9 +27,7 @@
       "include-component-in-tag": true,
       "release-as": "8.4.16",
       "changelog-path": "CHANGELOG.md",
-      "exclude-paths": [
-        "docker/debian/CHANGELOG.md"
-      ],
+      "exclude-paths": ["docker/debian/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
@@ -51,9 +47,7 @@
       "include-component-in-tag": true,
       "release-as": "8.4.21",
       "changelog-path": "CHANGELOG.md",
-      "exclude-paths": [
-        "docker/rocky/CHANGELOG.md"
-      ],
+      "exclude-paths": ["docker/rocky/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
