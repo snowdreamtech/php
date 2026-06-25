@@ -364,6 +364,8 @@ project/boot/
 ### C / C++ ###
 *.d
 !**/entrypoint.d/
+!**/http.d/
+!**/conf.d/
 *.o
 *.ko
 *.obj
