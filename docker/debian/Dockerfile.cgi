@@ -75,10 +75,9 @@ RUN set -eux \
     && rm -rf /var/tmp/*
 
 # Container Orchestration Files
-COPY entrypoint.d /usr/local/bin/entrypoint.d
+COPY entrypoint.d/*cgi* /usr/local/bin/entrypoint.d/
 
-RUN chmod +x /usr/local/bin/entrypoint.d/* \
-    && rm -f /usr/local/bin/entrypoint.d/*fpm*
+RUN chmod +x /usr/local/bin/entrypoint.d/*
 
 # Standard Healthcheck (Verification of core system responsiveness)
 HEALTHCHECK NONE

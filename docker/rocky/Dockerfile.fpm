@@ -86,10 +86,9 @@ RUN set -eux \
     && rm -f /etc/httpd/conf.d/php-fpm.conf 2>/dev/null || true
 
 # Container Orchestration Files
-COPY entrypoint.d /usr/local/bin/entrypoint.d
+COPY entrypoint.d/*fpm* /usr/local/bin/entrypoint.d/
 
-RUN chmod +x /usr/local/bin/entrypoint.d/* \
-    && rm -f /usr/local/bin/entrypoint.d/*cgi*
+RUN chmod +x /usr/local/bin/entrypoint.d/*
 
 # Standard Healthcheck (Verification of core system responsiveness)
 HEALTHCHECK NONE
