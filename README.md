@@ -31,6 +31,16 @@ docker-compose up -d
 
 ## Distribution Variants
 
+
+### 🌟 Best Practice for Web Apps (Nginx + PHP-FPM)
+
+If you simply want to run a PHP web application out-of-the-box, use the `nginx` flavor (e.g., `snowdreamtech/php:nginx-debian`). 
+It comes with Nginx and PHP-FPM pre-configured and runs seamlessly on port 80. You do not need to configure FastCGI manually. Just drop your code into `/var/www/html`:
+
+```bash
+docker run -d   --name=php-web   -p 8080:80   -v ./src:/var/www/html   snowdreamtech/php:nginx-debian
+```
+
 ### Debian (Default)
 
 The recommended variant for most use cases, providing wide compatibility and extensive package availability.
