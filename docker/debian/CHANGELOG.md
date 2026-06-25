@@ -24,4 +24,3 @@
 ### ♻️ Miscellaneous Chores
 
 * style fixes and remove trailing empty lines ([d09187f](https://github.com/snowdreamtech/php/commit/d09187f4756c95d7155a091cb633f1839462cb86))
-

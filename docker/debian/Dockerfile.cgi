@@ -68,6 +68,18 @@ RUN set -eux \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy update \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \
     php8.4-cgi=${PHP_VERSION} \
+    php8.4-bcmath=${PHP_VERSION} \
+    php8.4-curl=${PHP_VERSION} \
+    php8.4-gd=${PHP_VERSION} \
+    php8.4-intl=${PHP_VERSION} \
+    php8.4-mbstring=${PHP_VERSION} \
+    php8.4-mysql=${PHP_VERSION} \
+    php8.4-opcache=${PHP_VERSION} \
+    php8.4-pgsql=${PHP_VERSION} \
+    php8.4-sqlite3=${PHP_VERSION} \
+    php8.4-xml=${PHP_VERSION} \
+    php8.4-zip=${PHP_VERSION} \
+    php8.4-redis \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
     && rm -rf /var/lib/apt/lists/* \
@@ -75,6 +87,7 @@ RUN set -eux \
     && rm -rf /var/tmp/*
 
 # Container Orchestration Files
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY entrypoint.d/*cgi* /usr/local/bin/entrypoint.d/
 
 RUN chmod +x /usr/local/bin/entrypoint.d/*
