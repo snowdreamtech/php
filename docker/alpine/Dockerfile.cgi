@@ -62,7 +62,8 @@ ENV PHP_MEMORY_LIMIT="1G" \
     PHP_CGI_FIX_PATHINFO=0
 
 # Additional tooling and configuration for PHP image
-RUN apk update \
+RUN set -eux \
+    && apk update \
     && apk add --no-cache \
     php84=${PHP_VERSION} \
     php84-cgi=${PHP_VERSION} \
@@ -88,6 +89,7 @@ RUN apk update \
     php84-iconv=${PHP_VERSION} \
     php84-sockets=${PHP_VERSION} \
     php84-sodium=${PHP_VERSION} \
+    php84-bz2=${PHP_VERSION} \
     php84-pecl-redis
 
 # Container Orchestration Files

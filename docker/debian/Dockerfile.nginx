@@ -34,7 +34,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/php"
 
 # x-release-please-start-version
-LABEL org.opencontainers.image.version="${VERSION:-8.4.16}"
+LABEL org.opencontainers.image.version="${VERSION:-8.4.21}"
 # x-release-please-end
 
 # Runtime Environment Configuration
@@ -85,6 +85,11 @@ RUN set -eux \
     php8.4-sqlite3=${PHP_VERSION} \
     php8.4-xml=${PHP_VERSION} \
     php8.4-zip=${PHP_VERSION} \
+    php8.4-bz2=${PHP_VERSION} \
+    php8.4-pcntl=${PHP_VERSION} \
+    php8.4-posix=${PHP_VERSION} \
+    php8.4-exif=${PHP_VERSION} \
+    php8.4-sockets=${PHP_VERSION} \
     php8.4-redis \
     nginx \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \

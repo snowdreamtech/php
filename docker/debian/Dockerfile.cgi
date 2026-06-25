@@ -79,6 +79,11 @@ RUN set -eux \
     php8.4-sqlite3=${PHP_VERSION} \
     php8.4-xml=${PHP_VERSION} \
     php8.4-zip=${PHP_VERSION} \
+    php8.4-bz2=${PHP_VERSION} \
+    php8.4-pcntl=${PHP_VERSION} \
+    php8.4-posix=${PHP_VERSION} \
+    php8.4-exif=${PHP_VERSION} \
+    php8.4-sockets=${PHP_VERSION} \
     php8.4-redis \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \

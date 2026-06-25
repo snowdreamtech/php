@@ -78,6 +78,7 @@ RUN set -eux \
     php8.4-process-${PHP_VERSION} \
     php8.4-sodium-${PHP_VERSION} \
     php8.4-xml-${PHP_VERSION} \
+    php8.4-sockets-${PHP_VERSION} \
     php8.4-pecl-zip \
     php8.4-pecl-redis6 \
     && dnf -y --allowerasing autoremove \
