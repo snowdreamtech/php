@@ -507,6 +507,9 @@ jobs:
                   (php-cgi -v || php-cgi8.4 -v || php84-cgi -v || php-cgi84 -v || php-cgi83 -v || php -v); \
                 elif [ \"\${{ matrix.flavor }}\" = \"fpm\" ]; then \
                   (php-fpm -v || php-fpm8.4 -v || php84-fpm -v || php-fpm84 -v || php-fpm83 -v || php -v); \
+                elif [ \"\${{ matrix.flavor }}\" = \"nginx\" ]; then \
+                  (php-fpm -v || php-fpm8.4 -v || php84-fpm -v || php-fpm84 -v || php-fpm83 -v || php -v) && \
+                  printf '  ✓ Nginx version: ' && nginx -v; \
                 fi && \
                 echo '  ✓ All checks passed'
               "; then
