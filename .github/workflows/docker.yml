@@ -499,7 +499,7 @@ jobs:
               sh -c "
                 echo '  ✓ Entrypoint execution: OK' && \
                 printf '  ✓ Timezone: ' && date '+%Z %z' && \
-                printf '  ✓ User context: ' && id -un && \
+                printf '  ✓ User context: ' && id -u && \
                 printf '  ✓ Package manager: ' && \
                 ${pkg_check} && echo 'functional' && \
                 printf '  ✓ App version: ' && \
