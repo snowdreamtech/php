@@ -88,7 +88,6 @@ RUN set -eux \
     php8.4-gmp=${PHP_VERSION} \
     php8.4-soap=${PHP_VERSION} \
     php8.4-ldap=${PHP_VERSION} \
-    php8.4-opcache=${PHP_VERSION} \
     php8.4-redis \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
