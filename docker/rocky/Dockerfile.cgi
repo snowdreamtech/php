@@ -82,6 +82,7 @@ RUN set -eux \
     php8.4-pecl-apcu-${PHP_VERSION} \
     php8.4-gmp-${PHP_VERSION} \
     php8.4-soap-${PHP_VERSION} \
+    php8.4-opcache-${PHP_VERSION} \
     php8.4-pecl-zip \
     php8.4-pecl-redis6 \
     && dnf -y --allowerasing autoremove \
