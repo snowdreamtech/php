@@ -68,10 +68,6 @@ RUN set -eux \
     php8.4-xml=${PHP_VERSION} \
     php8.4-zip=${PHP_VERSION} \
     php8.4-bz2=${PHP_VERSION} \
-    php8.4-pcntl=${PHP_VERSION} \
-    php8.4-posix=${PHP_VERSION} \
-    php8.4-exif=${PHP_VERSION} \
-    php8.4-sockets=${PHP_VERSION} \
     php8.4-apcu \
     php8.4-gmp=${PHP_VERSION} \
     php8.4-soap=${PHP_VERSION} \
@@ -84,7 +80,13 @@ RUN set -eux \
     && rm -rf /var/tmp/*
 
 # Container Orchestration Files
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN set -eux \
+    && curl --retry 5 -sS https://getcomposer.org/installer -o /tmp/composer-setup.php \
+    && EXPECTED_CHECKSUM="$(curl --retry 5 -sS https://composer.github.io/installer.sig)" \
+    && ACTUAL_CHECKSUM="$(php -r 'echo hash_file('"'sha384'"', '"'/tmp/composer-setup.php'"');')" \
+    && if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]; then echo "Composer installer checksum mismatch" >&2; rm /tmp/composer-setup.php; exit 1; fi \
+    && php /tmp/composer-setup.php --install-dir=/usr/bin --filename=composer \
+    && rm /tmp/composer-setup.php
 
 # Standard Healthcheck (Verification of core system responsiveness)
 HEALTHCHECK NONE

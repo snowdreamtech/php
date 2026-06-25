@@ -101,10 +101,19 @@ RUN set -eux \
     php84-gmp=${PHP_VERSION} \
     php84-soap=${PHP_VERSION} \
     php84-ldap=${PHP_VERSION} \
-    php84-pecl-redis
+    php84-phar=${PHP_VERSION} \
+    php84-openssl=${PHP_VERSION} \
+    php84-pecl-redis \
+    && ln -sf /usr/bin/php84 /usr/bin/php
 
 # Container Orchestration Files
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN set -eux \
+    && curl --retry 5 -sS https://getcomposer.org/installer -o /tmp/composer-setup.php \
+    && EXPECTED_CHECKSUM="$(curl --retry 5 -sS https://composer.github.io/installer.sig)" \
+    && ACTUAL_CHECKSUM="$(php -r 'echo hash_file('"'sha384'"', '"'/tmp/composer-setup.php'"');')" \
+    && if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]; then echo "Composer installer checksum mismatch" >&2; rm /tmp/composer-setup.php; exit 1; fi \
+    && php /tmp/composer-setup.php --install-dir=/usr/bin --filename=composer \
+    && rm /tmp/composer-setup.php
 COPY entrypoint.d/*fpm* /usr/local/bin/entrypoint.d/
 
 RUN chmod +x /usr/local/bin/entrypoint.d/*
