@@ -90,7 +90,7 @@ RUN set -eux \
     php84-sockets=${PHP_VERSION} \
     php84-sodium=${PHP_VERSION} \
     php84-bz2=${PHP_VERSION} \
-    php84-pecl-apcu=${PHP_VERSION} \
+    php84-pecl-apcu \
     php84-gmp=${PHP_VERSION} \
     php84-soap=${PHP_VERSION} \
     php84-ldap=${PHP_VERSION} \

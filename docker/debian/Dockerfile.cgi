@@ -84,7 +84,7 @@ RUN set -eux \
     php8.4-posix=${PHP_VERSION} \
     php8.4-exif=${PHP_VERSION} \
     php8.4-sockets=${PHP_VERSION} \
-    php8.4-apcu=${PHP_VERSION} \
+    php8.4-apcu \
     php8.4-gmp=${PHP_VERSION} \
     php8.4-soap=${PHP_VERSION} \
     php8.4-ldap=${PHP_VERSION} \
