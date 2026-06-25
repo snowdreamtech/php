@@ -75,7 +75,7 @@ RUN apk update \
     nginx
 
 # Container Orchestration Files
-COPY entrypoint.d/*fpm* /usr/local/bin/entrypoint.d/
+COPY entrypoint.d/*fpm* entrypoint.d/*nginx* /usr/local/bin/entrypoint.d/
 
 RUN chmod +x /usr/local/bin/entrypoint.d/*
 
@@ -85,9 +85,7 @@ HEALTHCHECK NONE
 
 # Nginx Configuration
 COPY nginx /etc/nginx
-RUN mv /etc/nginx/25-nginx-start.sh /usr/local/bin/entrypoint.d/25-nginx-start.sh \
-    && chmod +x /usr/local/bin/entrypoint.d/25-nginx-start.sh \
-    && mkdir -p /var/www/html
+RUN mkdir -p /var/www/html
 
 # Process Execution
 EXPOSE 80 443
