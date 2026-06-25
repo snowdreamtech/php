@@ -83,8 +83,8 @@ RUN chmod +x /usr/local/bin/entrypoint.d/* \
 # Standard Healthcheck (Verification of core system responsiveness)
 HEALTHCHECK NONE
 
-EXPOSE 9000
 # Process Execution
+EXPOSE 9000
 USER root
 WORKDIR /root
 ENTRYPOINT ["docker-entrypoint.sh"]
