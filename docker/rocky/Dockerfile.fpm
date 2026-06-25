@@ -61,17 +61,33 @@ ENV PHP_MEMORY_LIMIT="1G" \
     PHP_ERROR_REPORTING="E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR" \
     PHP_CGI_FIX_PATHINFO=0
 
-ENV PHP_FPM_USER="root" \
-    PHP_FPM_GROUP="root" \
+ENV PHP_FPM_USER="www-data" \
+    PHP_FPM_GROUP="www-data" \
     PHP_FPM_HOST="127.0.0.1" \
     PHP_FPM_PORT=9000 \
     PHP_FPM_LISTEN_MODE="0660"
 
 # Additional tooling and configuration for PHP image
 RUN set -eux \
+    && (groupadd -g 82 -r www-data 2>/dev/null || true) \
+    && (useradd -u 82 -r -g www-data -s /sbin/nologin -d /var/www www-data 2>/dev/null || true) \
     && dnf -y --allowerasing update \
     && dnf -y --allowerasing install \
     php8.4-fpm-${PHP_VERSION} \
+    php8.4-bcmath-${PHP_VERSION} \
+    php8.4-common-${PHP_VERSION} \
+    php8.4-gd-${PHP_VERSION} \
+    php8.4-intl-${PHP_VERSION} \
+    php8.4-mbstring-${PHP_VERSION} \
+    php8.4-mysqlnd-${PHP_VERSION} \
+    php8.4-opcache-${PHP_VERSION} \
+    php8.4-pdo-${PHP_VERSION} \
+    php8.4-pgsql-${PHP_VERSION} \
+    php8.4-process-${PHP_VERSION} \
+    php8.4-sodium-${PHP_VERSION} \
+    php8.4-xml-${PHP_VERSION} \
+    php8.4-pecl-zip \
+    php8.4-pecl-redis6 \
     && dnf -y --allowerasing autoremove \
     && dnf -y --allowerasing clean all \
     && rm -rf /var/cache/dnf \
@@ -86,6 +102,7 @@ RUN set -eux \
     && rm -f /etc/httpd/conf.d/php-fpm.conf 2>/dev/null || true
 
 # Container Orchestration Files
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY entrypoint.d/*fpm* /usr/local/bin/entrypoint.d/
 
 RUN chmod +x /usr/local/bin/entrypoint.d/*

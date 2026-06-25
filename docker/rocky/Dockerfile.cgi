@@ -66,6 +66,20 @@ RUN set -eux \
     && dnf -y --allowerasing update \
     && dnf -y --allowerasing install \
     php8.4-cli-${PHP_VERSION} \
+    php8.4-bcmath-${PHP_VERSION} \
+    php8.4-common-${PHP_VERSION} \
+    php8.4-gd-${PHP_VERSION} \
+    php8.4-intl-${PHP_VERSION} \
+    php8.4-mbstring-${PHP_VERSION} \
+    php8.4-mysqlnd-${PHP_VERSION} \
+    php8.4-opcache-${PHP_VERSION} \
+    php8.4-pdo-${PHP_VERSION} \
+    php8.4-pgsql-${PHP_VERSION} \
+    php8.4-process-${PHP_VERSION} \
+    php8.4-sodium-${PHP_VERSION} \
+    php8.4-xml-${PHP_VERSION} \
+    php8.4-pecl-zip \
+    php8.4-pecl-redis6 \
     && dnf -y --allowerasing autoremove \
     && dnf -y --allowerasing clean all \
     && rm -rf /var/cache/dnf \
@@ -73,6 +87,7 @@ RUN set -eux \
     && rm -rf /var/tmp/*
 
 # Container Orchestration Files
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY entrypoint.d/*cgi* /usr/local/bin/entrypoint.d/
 
 RUN chmod +x /usr/local/bin/entrypoint.d/*
