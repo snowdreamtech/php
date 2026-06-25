@@ -520,6 +520,8 @@ jobs:
           }
 
           # Test images from each registry
+          FAILED_TESTS=0
+
           # DockerHub (no prefix)
           if [ "${{ steps.login-dockerhub.outcome }}" = "success" ]; then
             dockerhub_tag=$(echo "${TAGS}" | grep -v '/' | head -n 1)
@@ -529,9 +531,12 @@ jobs:
                 if run_smoke_test "${dockerhub_tag}" "DockerHub"; then
                   size=$(docker image inspect "${dockerhub_tag}" --format='{{.Size}}' | awk '{printf "%.2f MB", $1/1024/1024}')
                   echo "  ✓ DockerHub image verified (Size: ${size})"
+                else
+                  FAILED_TESTS=$((FAILED_TESTS + 1))
                 fi
               else
                 echo "  ✗ DockerHub image pull failed after retries"
+                FAILED_TESTS=$((FAILED_TESTS + 1))
               fi
             fi
           fi
@@ -545,9 +550,12 @@ jobs:
                 if run_smoke_test "${ghcr_tag}" "GHCR"; then
                   size=$(docker image inspect "${ghcr_tag}" --format='{{.Size}}' | awk '{printf "%.2f MB", $1/1024/1024}')
                   echo "  ✓ GHCR image verified (Size: ${size})"
+                else
+                  FAILED_TESTS=$((FAILED_TESTS + 1))
                 fi
               else
                 echo "  ✗ GHCR image pull failed after retries"
+                FAILED_TESTS=$((FAILED_TESTS + 1))
               fi
             fi
           fi
@@ -561,14 +569,21 @@ jobs:
                 if run_smoke_test "${quay_tag}" "Quay.io"; then
                   size=$(docker image inspect "${quay_tag}" --format='{{.Size}}' | awk '{printf "%.2f MB", $1/1024/1024}')
                   echo "  ✓ Quay.io image verified (Size: ${size})"
+                else
+                  FAILED_TESTS=$((FAILED_TESTS + 1))
                 fi
               else
                 echo "  ✗ Quay.io image pull failed after retries"
+                FAILED_TESTS=$((FAILED_TESTS + 1))
               fi
             fi
           fi
 
-          echo "✓ Registry verification completed"
+          if [ "$FAILED_TESTS" -gt 0 ]; then
+            echo "::error::Registry verification completed with $FAILED_TESTS failures"
+            exit 1
+          fi
+          echo "✓ Registry verification completed successfully"
 
       - name: "🕵️ Scan Image for Vulnerabilities (Trivy)"
         id: trivy
