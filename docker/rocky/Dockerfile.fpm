@@ -76,7 +76,14 @@ RUN set -eux \
     && dnf -y --allowerasing clean all \
     && rm -rf /var/cache/dnf \
     && rm -rf /tmp/* \
-    && rm -rf /var/tmp/*
+    && rm -rf /var/tmp/* \
+    # Remove spurious nginx/httpd integration files shipped by php-fpm RPM.
+    # php-fpm drags in nginx-filesystem as a dependency and installs
+    # drop-in configs that collide with find-based php-fpm.conf discovery.
+    && rm -rf /etc/nginx \
+    && rm -rf /etc/systemd/system/nginx.service.d \
+    && rm -rf /etc/systemd/system/httpd.service.d \
+    && rm -f /etc/httpd/conf.d/php-fpm.conf 2>/dev/null || true
 
 # Container Orchestration Files
 COPY entrypoint.d /usr/local/bin/entrypoint.d
