@@ -11,4 +11,3 @@
 ### ♻️ Miscellaneous Chores
 
 * add line continuation character to nginx package installation in Dockerfiles ([3a63ed4](https://github.com/snowdreamtech/php/commit/3a63ed4d2854195dd5479e37a8988e13f84d8117))
-
