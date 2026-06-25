@@ -5,6 +5,13 @@
 
 ### 🚀 Features
 
+* **alpine:** install mainstream PHP extensions and Composer ([1a8640f](https://github.com/snowdreamtech/php/commit/1a8640fd25f1633368899ac81ebb421ab37159f5))
+
+## [8.4.22](https://github.com/snowdreamtech/php/compare/alpine-v8.4.22...alpine-v8.4.22) (2026-06-25)
+
+
+### 🚀 Features
+
 * introduce nginx flavor for an out-of-the-box PHP-FPM + Nginx bundled environment ([67c2f4f](https://github.com/snowdreamtech/php/commit/67c2f4f47f0e67b5c44a8982977765a2e198da29))
 
 
