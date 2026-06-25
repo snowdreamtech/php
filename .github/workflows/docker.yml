@@ -493,13 +493,11 @@ jobs:
               -e DEBUG=false \
               -e KEEPALIVE=0 \
               -e TZ=Asia/Shanghai \
-              -e PUID=1000 \
-              -e PGID=1000 \
               "${tag}" \
               sh -c "
                 echo '  ✓ Entrypoint execution: OK' && \
                 printf '  ✓ Timezone: ' && date '+%Z %z' && \
-                printf '  ✓ User context: ' && id -u && \
+                printf '  ✓ User context: ' && id -un && \
                 printf '  ✓ Package manager: ' && \
                 ${pkg_check} && echo 'functional' && \
                 printf '  ✓ App version: ' && \
