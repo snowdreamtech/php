@@ -19,6 +19,9 @@ for conf in /etc/php-fpm.conf /etc/php/*/fpm/php-fpm.conf /etc/php*/php-fpm.conf
   fi
 done
 
+# Ensure standard PID directories exist (replacing systemd's role in containers)
+mkdir -p /run/php /run/php-fpm
+
 if [ -n "$FPM_CONF" ]; then
   "$PHP_FPM_BIN" --allow-to-run-as-root --fpm-config "$FPM_CONF"
 else
