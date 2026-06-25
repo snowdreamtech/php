@@ -25,33 +25,3 @@
 
 * style fixes and remove trailing empty lines ([d09187f](https://github.com/snowdreamtech/php/commit/d09187f4756c95d7155a091cb633f1839462cb86))
 
-## [8.4.22](https://github.com/snowdreamtech/php/compare/alpine-v8.4.22...alpine-v8.4.22) (2026-06-25)
-
-
-### 🚀 Features
-
-* implement multi-flavor tag architecture (cli, cgi, fpm) mirroring aria2 ([80b783e](https://github.com/snowdreamtech/php/commit/80b783e1ab3e6b8c5af7e68586b568a34d985fba))
-
-
-### 🐛 Bug Fixes
-
-* **cgi:** expose port 9000 and bind to 0.0.0.0 ([2a9cc50](https://github.com/snowdreamtech/php/commit/2a9cc503f9b006f8b12ddaca366e3d9ce58eb5c1))
-* **docker:** dynamic resolution of php-cgi and php-fpm binaries in entrypoint scripts ([43007d5](https://github.com/snowdreamtech/php/commit/43007d51272ed08951fb2e26ab6da63549d197ae))
-* **docker:** fix smoke test hanging for CGI and FPM failing to start ([397c558](https://github.com/snowdreamtech/php/commit/397c55850d99924606368cf4c6d48c3307d1a08f))
-* **docker:** pin precise PHP 8.4 versions and fix package names for Alpine, Debian and Rocky ([0125f3e](https://github.com/snowdreamtech/php/commit/0125f3e48210bd6a3adb24909f2160ba83872b78))
-* **fpm:** broaden nginx filter to ignore systemd service drops ([ffb327c](https://github.com/snowdreamtech/php/commit/ffb327c3c6a7553c1426ef751d4c621896915767))
-* **fpm:** ensure PID directories exist across all distros ([f24518f](https://github.com/snowdreamtech/php/commit/f24518f3d0baedc97b90d2de5a197c0c38c9edc4))
-* **fpm:** ignore nginx-provided php-fpm.conf in config discovery ([69d556a](https://github.com/snowdreamtech/php/commit/69d556a3f982249fa6a853a99f5fc1040dce4301))
-* **fpm:** replace find-based config discovery with deterministic path lookup ([02e7a56](https://github.com/snowdreamtech/php/commit/02e7a564769e24d33ac9bb2fe37efe673ff2102c))
-
-
-### 🛠 Refactoring
-
-* add fallback defaults to environment variables for robustness ([a59e915](https://github.com/snowdreamtech/php/commit/a59e9156505df045f8b94b79eb6183d7e9cb8913))
-* enforce POSIX compliance by replacing \s with [[:space:]] ([0dc4efb](https://github.com/snowdreamtech/php/commit/0dc4efb365d9f3564e4e917b5eecdade4b287531))
-* optimize configuration file lookup to prevent redundant searches ([61fdce7](https://github.com/snowdreamtech/php/commit/61fdce71a715629031ca4206c530eee6b47c75f6))
-
-
-### 📖 Documentation
-
-* remove redundant 10-base-init.sh references and physical files ([65b490f](https://github.com/snowdreamtech/php/commit/65b490f506c2ada537baafd08e5b5d8d6baafc3a))
