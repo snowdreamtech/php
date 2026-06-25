@@ -65,7 +65,6 @@ ENV PHP_MEMORY_LIMIT="1G" \
 RUN set -eux \
     && apk update \
     && apk add --no-cache \
-    php84=${PHP_VERSION} \
     php84-cgi=${PHP_VERSION} \
     php84-bcmath=${PHP_VERSION} \
     php84-curl=${PHP_VERSION} \

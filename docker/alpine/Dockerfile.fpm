@@ -73,7 +73,6 @@ RUN set -eux \
     && (adduser -u 82 -D -S -G www-data -s /sbin/nologin -h /var/www www-data 2>/dev/null || true) \
     && apk update \
     && apk add --no-cache \
-    php84=${PHP_VERSION} \
     php84-fpm=${PHP_VERSION} \
     php84-bcmath=${PHP_VERSION} \
     php84-curl=${PHP_VERSION} \

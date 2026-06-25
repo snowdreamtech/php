@@ -53,7 +53,6 @@ ENV KEEPALIVE=${KEEPALIVE} \
 RUN set -eux \
     && apk update \
     && apk add --no-cache \
-    php84=${PHP_VERSION} \
     php84-cli=${PHP_VERSION} \
     php84-bcmath=${PHP_VERSION} \
     php84-curl=${PHP_VERSION} \
