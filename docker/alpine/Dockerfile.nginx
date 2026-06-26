@@ -61,14 +61,16 @@ ENV PHP_MEMORY_LIMIT="1G" \
     PHP_ERROR_REPORTING="E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR" \
     PHP_CGI_FIX_PATHINFO=0
 
-ENV PHP_FPM_USER="nginx" \
-    PHP_FPM_GROUP="nginx" \
+ENV PHP_FPM_USER="www-data" \
+    PHP_FPM_GROUP="www-data" \
     PHP_FPM_HOST="127.0.0.1" \
     PHP_FPM_PORT=9000 \
     PHP_FPM_LISTEN_MODE="0660"
 
 # Additional tooling and configuration for PHP image
 RUN set -eux \
+    && (addgroup -g 82 -S www-data 2>/dev/null || true) \
+    && (adduser -u 82 -D -S -G www-data -s /sbin/nologin -h /var/www www-data 2>/dev/null || true) \
     && apk update \
     && apk add --no-cache \
     php84-fpm=${PHP_VERSION} \
