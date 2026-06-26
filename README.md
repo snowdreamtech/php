@@ -149,6 +149,7 @@ All variants support the following environment variables for runtime configurati
 | `USER` | `root` | Username for custom user creation |
 | `WORKDIR` | `/root` | Working directory path |
 | `TZ` | - | Timezone (e.g., `Asia/Shanghai`, `America/New_York`) |
+| `NGINX_WEB_ROOT` | `/var/www/html` | Nginx default web root directory |
 
 **Debian-specific**:
 
