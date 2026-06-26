@@ -88,6 +88,7 @@ RUN set -eux \
     php8.4-redis \
     php8.4-memcached \
     php8.4-mongodb \
+    php8.4-igbinary \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy --purge autoremove \
     && DEBIAN_FRONTEND=noninteractive apt-get -qqy clean \
     && rm -rf /var/lib/apt/lists/* \

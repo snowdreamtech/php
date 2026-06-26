@@ -100,6 +100,7 @@ RUN set -eux \
     php8.4-redis \
     php8.4-memcached \
     php8.4-mongodb \
+    php8.4-igbinary \
     nginx \
     socat \
     cron \

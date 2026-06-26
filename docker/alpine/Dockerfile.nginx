@@ -112,6 +112,7 @@ RUN set -eux \
     php84-pecl-redis \
     php84-pecl-memcached \
     php84-pecl-mongodb \
+    php84-pecl-igbinary \
     nginx \
     socat \
     cronie \
