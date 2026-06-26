@@ -122,7 +122,7 @@ RUN set -eux \
     # Remove spurious nginx/httpd integration files shipped by php-fpm RPM.
     # php-fpm drags in nginx-filesystem as a dependency and installs
     # drop-in configs that collide with find-based php-fpm.conf discovery.
-        && rm -rf /etc/systemd/system/nginx.service.d \
+    && rm -rf /etc/systemd/system/nginx.service.d \
     && rm -rf /etc/systemd/system/httpd.service.d \
     && rm -f /etc/httpd/conf.d/php-fpm.conf 2>/dev/null || true
 
