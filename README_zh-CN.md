@@ -140,6 +140,7 @@ docker buildx build \
 | `USER` | `root` | 自定义用户创建的用户名 |
 | `WORKDIR` | `/root` | 工作目录路径 |
 | `TZ` | - | 时区（例如 `Asia/Shanghai`、`America/New_York`）|
+| `NGINX_WEB_ROOT` | `/var/www/html` | Nginx 默认网站根目录 |
 
 **Debian 特定**：
 
