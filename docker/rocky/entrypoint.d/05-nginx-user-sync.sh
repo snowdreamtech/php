@@ -13,12 +13,12 @@ DEFAULT_FPM_USER="www-data"
 # Only sync if PHP_FPM_USER is still at the default value
 # (i.e., the user hasn't explicitly overridden it)
 if [ "${PHP_FPM_USER}" = "${DEFAULT_FPM_USER}" ]; then
-    NGINX_CONF="/etc/nginx/nginx.conf"
-    if [ -f "$NGINX_CONF" ]; then
-        NGINX_USER=$(awk '/^[[:space:]]*user[[:space:]]/ {gsub(/;/, "", $2); print $2; exit}' "$NGINX_CONF")
-        if [ -n "$NGINX_USER" ] && [ "$NGINX_USER" != "$DEFAULT_FPM_USER" ]; then
-            export PHP_FPM_USER="$NGINX_USER"
-            export PHP_FPM_GROUP="$NGINX_USER"
-        fi
+  NGINX_CONF="/etc/nginx/nginx.conf"
+  if [ -f "$NGINX_CONF" ]; then
+    NGINX_USER=$(awk '/^[[:space:]]*user[[:space:]]/ {gsub(/;/, "", $2); print $2; exit}' "$NGINX_CONF")
+    if [ -n "$NGINX_USER" ] && [ "$NGINX_USER" != "$DEFAULT_FPM_USER" ]; then
+      export PHP_FPM_USER="$NGINX_USER"
+      export PHP_FPM_GROUP="$NGINX_USER"
     fi
+  fi
 fi
