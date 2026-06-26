@@ -61,6 +61,12 @@ ENV PHP_MEMORY_LIMIT="1G" \
     PHP_ERROR_REPORTING="E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR" \
     PHP_CGI_FIX_PATHINFO=0
 
+# Note: The following PECL extensions are currently unavailable in the Rocky/PHP 8.4 repos
+# and have been temporarily removed from the installation list below:
+# - php8.4-pecl-memcached
+# - php8.4-pecl-mongodb
+# - php8.4-pecl-igbinary
+
 # Additional tooling and configuration for PHP image
 RUN set -eux \
     && dnf -y --allowerasing update \
