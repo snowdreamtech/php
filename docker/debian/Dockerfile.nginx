@@ -52,6 +52,7 @@ ENV DEBIAN_FRONTEND=${DEBIAN_FRONTEND} \
     USER=${USER} \
     WORKDIR=${WORKDIR} \
     PHP_VERSION=${PHP_VERSION} \
+    NGINX_WEB_ROOT=/var/www/html \
     ACME_SH_VERSION=${ACME_SH_VERSION} \
     LE_WORKING_DIR=/root/.acme.sh \
     PATH=${PATH}:/root/.acme.sh
@@ -102,6 +103,8 @@ RUN set -eux \
     cron \
     wget \
     ca-certificates \
+    && mkdir -p ${NGINX_WEB_ROOT} \
+    && cp -a /var/www/html/index.nginx-debian.html ${NGINX_WEB_ROOT}/index.html || true \
     && cd /root \
     && wget -c ${GITHUB_PROXY}https://github.com/acmesh-official/acme.sh/archive/refs/tags/${ACME_SH_VERSION}.tar.gz \
     && tar zxvf ${ACME_SH_VERSION}.tar.gz \

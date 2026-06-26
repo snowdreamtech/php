@@ -50,6 +50,7 @@ ENV KEEPALIVE=${KEEPALIVE} \
     USER=${USER} \
     WORKDIR=${WORKDIR} \
     PHP_VERSION=${PHP_VERSION} \
+    NGINX_WEB_ROOT=/var/www/html \
     ACME_SH_VERSION=${ACME_SH_VERSION} \
     LE_WORKING_DIR=/root/.acme.sh \
     PATH=${PATH}:/root/.acme.sh
@@ -104,6 +105,8 @@ RUN set -eux \
     wget \
     ca-certificates \
     tar \
+    && mkdir -p ${NGINX_WEB_ROOT} \
+    && cp -a /usr/share/nginx/html/. ${NGINX_WEB_ROOT}/ \
     && cd /root \
     && wget -c ${GITHUB_PROXY}https://github.com/acmesh-official/acme.sh/archive/refs/tags/${ACME_SH_VERSION}.tar.gz \
     && tar zxvf ${ACME_SH_VERSION}.tar.gz \
