@@ -17,7 +17,9 @@ ARG BUILDTIME \
     PUID=0 \
     USER=root \
     WORKDIR=/root \
-    PHP_VERSION=8.4.21-1.el10_2
+    PHP_VERSION=8.4.21-1.el10_2 \
+    ACME_SH_VERSION=3.1.3 \
+    GITHUB_PROXY="https://gh-proxy.sn0wdr1am.com/"
 
 # Standard OCI Metadata (https://github.com/opencontainers/image-spec)
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
@@ -47,7 +49,10 @@ ENV KEEPALIVE=${KEEPALIVE} \
     PUID=${PUID} \
     USER=${USER} \
     WORKDIR=${WORKDIR} \
-    PHP_VERSION=${PHP_VERSION}
+    PHP_VERSION=${PHP_VERSION} \
+    ACME_SH_VERSION=${ACME_SH_VERSION} \
+    LE_WORKING_DIR=/root/.acme.sh \
+    PATH=${PATH}:/root/.acme.sh
 
 
 ENV PHP_MEMORY_LIMIT="1G" \
@@ -94,6 +99,21 @@ RUN set -eux \
     php8.4-pecl-zip \
     php8.4-pecl-redis6 \
     nginx \
+    socat \
+    cronie \
+    wget \
+    ca-certificates \
+    tar \
+    && cd /root \
+    && wget -c ${GITHUB_PROXY}https://github.com/acmesh-official/acme.sh/archive/refs/tags/${ACME_SH_VERSION}.tar.gz \
+    && tar zxvf ${ACME_SH_VERSION}.tar.gz \
+    && cd acme.sh-${ACME_SH_VERSION} \
+    && ./acme.sh --install --home /root/.acme.sh -m my@example.com \
+    && cd /root \
+    && rm -rfv ${ACME_SH_VERSION}.tar.gz \
+    && rm -rfv acme.sh-${ACME_SH_VERSION} \
+    && /root/.acme.sh/acme.sh --upgrade --auto-upgrade \
+    && /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt \
     && dnf -y --allowerasing autoremove \
     && dnf -y --allowerasing clean all \
     && rm -rf /var/cache/dnf \
