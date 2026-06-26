@@ -18,26 +18,3 @@
 
 * sync template files to use standardized /var/www/html Nginx web root ([900719b](https://github.com/snowdreamtech/php/commit/900719baea0811ea008ca7f04ed2c7ea03147827))
 
-## [8.4.22](https://github.com/snowdreamtech/php/compare/alpine-v8.4.22...alpine-v8.4.22) (2026-06-26)
-
-
-### 🚀 Features
-
-* add acme.sh to nginx variants and update to v3.1.3 ([c1c0ae4](https://github.com/snowdreamtech/php/commit/c1c0ae4178be1003cbb5bd684f1685abe6ad0cb3))
-* unify PHP-FPM and Nginx user to www-data ([1d4bea4](https://github.com/snowdreamtech/php/commit/1d4bea42a6b662eafa048ba360e212703a84312b))
-
-
-### 🐛 Bug Fixes
-
-* **docker/alpine:** remove conflicting php84 base meta package to resolve breaks error ([eb8bc01](https://github.com/snowdreamtech/php/commit/eb8bc01c6e649ced067536c1dab735f874baa041))
-* **docker/alpine:** replace non-existent php84-cli with php84 package and remove duplicate opcache in all variants ([1b75739](https://github.com/snowdreamtech/php/commit/1b75739edd1d55e352c28e40641b46352edf0a7e))
-* **docker:** resolve multi-arch build errors and improve composer installation robustness ([29551e3](https://github.com/snowdreamtech/php/commit/29551e3f62bab4a7983ee621367d14c7e4fc2b52))
-* **docker:** resolve PECL package version pinning and missing sockets in Rocky ([45b5177](https://github.com/snowdreamtech/php/commit/45b51772cf2a409f386f6c67233f9ff881143ddc))
-* remove hardcoded email from acme.sh installation ([92f3878](https://github.com/snowdreamtech/php/commit/92f3878b8d63b6cecfcd5e5d53e2853b1814cc47))
-* rename cron start script to match COPY globs in Dockerfile ([2769cd5](https://github.com/snowdreamtech/php/commit/2769cd518e638fe9435868d3099a23800d7d7508))
-* start cron daemon in entrypoint and fix indentation in rocky Dockerfile ([f0701a2](https://github.com/snowdreamtech/php/commit/f0701a25241d1ad60abd04641dfc0faaa971b25b))
-
-
-### 📖 Documentation
-
-* **changelog:** update changelogs for new extensions ([bdc028f](https://github.com/snowdreamtech/php/commit/bdc028ff3b3bdf1ae78b53c34e1eee16355cbc64))
