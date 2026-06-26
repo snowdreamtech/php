@@ -84,6 +84,8 @@ RUN set -eux \
     php8.4-ldap-${PHP_VERSION} \
     php8.4-pecl-zip \
     php8.4-pecl-redis6 \
+    php8.4-pecl-memcached \
+    php8.4-pecl-mongodb \
     && dnf -y --allowerasing autoremove \
     && dnf -y --allowerasing clean all \
     && rm -rf /var/cache/dnf \

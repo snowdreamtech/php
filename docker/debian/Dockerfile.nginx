@@ -98,6 +98,8 @@ RUN set -eux \
     php8.4-soap=${PHP_VERSION} \
     php8.4-ldap=${PHP_VERSION} \
     php8.4-redis \
+    php8.4-memcached \
+    php8.4-mongodb \
     nginx \
     socat \
     cron \

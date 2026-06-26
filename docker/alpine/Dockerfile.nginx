@@ -110,6 +110,8 @@ RUN set -eux \
     php84-phar=${PHP_VERSION} \
     php84-openssl=${PHP_VERSION} \
     php84-pecl-redis \
+    php84-pecl-memcached \
+    php84-pecl-mongodb \
     nginx \
     socat \
     cronie \
