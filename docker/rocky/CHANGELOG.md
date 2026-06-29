@@ -15,7 +15,7 @@
 * **docker:** remove unavailable pecl extensions from rocky variants ([c1232c9](https://github.com/snowdreamtech/php/commit/c1232c96f777d7f23cef866633448a8e2b61b4b6))
 
 
-### 🛠 Refactoring
+### 🐛 Bug Fixes
 
 * sync template files to use standardized /var/www/html Nginx web root ([900719b](https://github.com/snowdreamtech/php/commit/900719baea0811ea008ca7f04ed2c7ea03147827))
 

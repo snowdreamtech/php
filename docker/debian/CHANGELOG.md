@@ -14,7 +14,7 @@
 * copy native default html pages to unified NGINX_WEB_ROOT in Dockerfile.nginx ([7ff647e](https://github.com/snowdreamtech/php/commit/7ff647e59dec8544a4993edb6bda3f95a9b1049e))
 
 
-### 🛠 Refactoring
+### 🐛 Bug Fixes
 
 * sync template files to use standardized /var/www/html Nginx web root ([900719b](https://github.com/snowdreamtech/php/commit/900719baea0811ea008ca7f04ed2c7ea03147827))
 
