@@ -537,26 +537,7 @@ jobs:
           FAILED_TESTS=0
           SUCCESS_TESTS=0
 
-          # DockerHub (no prefix)
-          if [ "${{ steps.login-dockerhub.outcome }}" = "success" ]; then
-            dockerhub_tag=$(echo "${TAGS}" | grep -v '^ghcr.io/' | grep -v '^quay.io/' | head -n 1)
-            if [ -n "${dockerhub_tag}" ]; then
-              echo "  Testing DockerHub: ${dockerhub_tag}"
-              if retry_pull "${dockerhub_tag}"; then
-                if run_smoke_test "${dockerhub_tag}" "DockerHub"; then
-                  size=$(docker image inspect "${dockerhub_tag}" --format='{{.Size}}' | awk '{printf "%.2f MB", $1/1024/1024}')
-                  echo "  ✓ DockerHub image verified (Size: ${size})"
-                  SUCCESS_TESTS=$((SUCCESS_TESTS + 1))
-                else
-                  FAILED_TESTS=$((FAILED_TESTS + 1))
-                fi
-              else
-                echo "  ⚠️ DockerHub image pull failed after retries (likely rate limit). Skipping smoke test for this registry."
-              fi
-            fi
-          fi
-
-          # GHCR
+          # GHCR (Prioritized)
           if [ "${{ steps.login-ghcr.outcome }}" = "success" ]; then
             ghcr_tag=$(echo "${TAGS}" | grep '^ghcr.io/' | head -n 1)
             if [ -n "${ghcr_tag}" ]; then
@@ -571,22 +552,6 @@ jobs:
                 fi
               else
                 echo "  ⚠️ GHCR image pull failed after retries. Skipping smoke test for this registry."
-              fi
-            fi
-          fi
-
-          # DockerHub (no prefix)
-          if [ "${{ steps.login-dockerhub.outcome }}" = "success" ]; then
-            dockerhub_tag=$(echo "${TAGS}" | grep -v '/' | head -n 1)
-            if [ -n "${dockerhub_tag}" ]; then
-              echo "  Testing DockerHub: ${dockerhub_tag}"
-              if retry_pull "${dockerhub_tag}"; then
-                if run_smoke_test "${dockerhub_tag}" "DockerHub"; then
-                  size=$(docker image inspect "${dockerhub_tag}" --format='{{.Size}}' | awk '{printf "%.2f MB", $1/1024/1024}')
-                  echo "  ✓ DockerHub image verified (Size: ${size})"
-                fi
-              else
-                echo "  ✗ DockerHub image pull failed after retries"
               fi
             fi
           fi
@@ -606,6 +571,25 @@ jobs:
                 fi
               else
                 echo "  ⚠️ Quay.io image pull failed after retries. Skipping smoke test for this registry."
+              fi
+            fi
+          fi
+
+          # DockerHub (no prefix)
+          if [ "${{ steps.login-dockerhub.outcome }}" = "success" ]; then
+            dockerhub_tag=$(echo "${TAGS}" | grep -v '^ghcr.io/' | grep -v '^quay.io/' | head -n 1)
+            if [ -n "${dockerhub_tag}" ]; then
+              echo "  Testing DockerHub: ${dockerhub_tag}"
+              if retry_pull "${dockerhub_tag}"; then
+                if run_smoke_test "${dockerhub_tag}" "DockerHub"; then
+                  size=$(docker image inspect "${dockerhub_tag}" --format='{{.Size}}' | awk '{printf "%.2f MB", $1/1024/1024}')
+                  echo "  ✓ DockerHub image verified (Size: ${size})"
+                  SUCCESS_TESTS=$((SUCCESS_TESTS + 1))
+                else
+                  FAILED_TESTS=$((FAILED_TESTS + 1))
+                fi
+              else
+                echo "  ⚠️ DockerHub image pull failed after retries (likely rate limit). Skipping smoke test for this registry."
               fi
             fi
           fi
