@@ -459,16 +459,16 @@ jobs:
           # Retry function
           retry_pull() {
             local tag="$1"
-            local max_attempts=3
+            local max_attempts=5
             local attempt=1
 
             while [ $attempt -le $max_attempts ]; do
               if docker pull "${tag}" 2>/dev/null; then
                 return 0
               fi
-              echo "    Attempt $attempt/$max_attempts failed, retrying..."
+              echo "    Attempt $attempt/$max_attempts failed, retrying in 10s..."
               attempt=$((attempt + 1))
-              sleep 2
+              sleep 10
             done
             return 1
           }
@@ -519,6 +519,8 @@ jobs:
                   (php-fpm -v || php-fpm8.4 -v || php84-fpm -v || php-fpm84 -v || php-fpm83 -v || php -v) && \
                   printf '  ✓ Nginx version: ' && nginx -v; \
                 fi && \
+                printf '  ✓ PHP CLI test: ' && php -r 'echo \"OK\n\";' && \
+                printf '  ✓ Composer version: ' && (composer --version || echo 'Not installed') && \
                 echo '  ✓ All checks passed'
               "; then
               return 0

@@ -86,6 +86,7 @@ RUN set -eux \
 
 # Container Orchestration Files
 RUN set -eux \
+    && (if ! command -v php >/dev/null 2>&1; then ln -s $(find /usr/bin /usr/local/bin /usr/sbin /usr/local/sbin -name "php[0-9]*" -type f -executable 2>/dev/null | grep -E "php[0-9.]+$" | head -n 1) /usr/bin/php || true; fi) \
     && curl --retry 5 -sS https://getcomposer.org/installer -o /tmp/composer-setup.php \
     && EXPECTED_CHECKSUM="$(curl --retry 5 -sS https://composer.github.io/installer.sig)" \
     && ACTUAL_CHECKSUM="$(php -r 'echo hash_file('"'sha384'"', '"'/tmp/composer-setup.php'"');')" \
