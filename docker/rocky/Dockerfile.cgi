@@ -78,7 +78,7 @@ RUN set -eux \
     php8.4-pdo-${PHP_VERSION} \
     php8.4-pgsql-${PHP_VERSION} \
     php8.4-process-${PHP_VERSION} \
-    php8.4-sodium-${PHP_VERSION} \
+    php8.4-sodium \
     php8.4-xml-${PHP_VERSION} \
     php8.4-pecl-apcu \
     php8.4-gmp-${PHP_VERSION} \
