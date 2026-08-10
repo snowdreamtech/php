@@ -52,9 +52,9 @@ docker run -d \
   snowdreamtech/php:debian
 ```
 
-**Supported Architectures**: i386, amd64, arm32v5, arm32v7, arm64, mips64le, ppc64le, s390x
+**Supported Architectures**: amd64, arm32v7, arm64, ppc64le, riscv64, s390x
 
-**Base Image**: `snowdreamtech/debian:13.5.0`
+**Base Image**: `snowdreamtech/debian:latest`
 
 ### Alpine
 
@@ -70,7 +70,7 @@ docker run -d \
 
 **Supported Architectures**: i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x
 
-**Base Image**: `snowdreamtech/alpine:3.24.0`
+**Base Image**: `snowdreamtech/alpine:latest`
 
 ### Rocky
 
@@ -84,9 +84,9 @@ docker run -d \
   snowdreamtech/php:rocky
 ```
 
-**Supported Architectures**: i386, amd64, arm32v5, arm32v7, arm64, mips64le, ppc64le, s390x
+**Supported Architectures**: i386, amd64, arm32v5, arm32v7, arm64, ppc64le, riscv64, s390x
 
-**Base Image**: `snowdreamtech/rocky:10.2.0`
+**Base Image**: `snowdreamtech/rocky:latest`
 
 ## Build Instructions
 
@@ -113,7 +113,7 @@ docker buildx create --use --name build --node build --driver-opt network=host
 
 # Build Debian for multiple architectures
 docker buildx build \
-  --platform=linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64,linux/mips64le,linux/ppc64le,linux/s390x \
+  --platform=linux/amd64,linux/arm/v7,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x \
   -t snowdreamtech/php:debian \
   ./docker/debian/ \
   --push
@@ -127,7 +127,7 @@ docker buildx build \
 
 # Build Rocky for multiple architectures
 docker buildx build \
-  --platform=linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64,linux/mips64le,linux/ppc64le,linux/s390x \
+  --platform=linux/amd64,linux/arm/v7,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x \
   -t snowdreamtech/php:rocky \
   ./docker/rocky/ \
   --push
@@ -225,7 +225,7 @@ Examples:
 
 This format allows:
 
-- **Full version pinning**: `13.5.0-debian` (exact version)
+- **Full version pinning**: `<version>-debian` (exact version)
 - **Variant latest tag**: `latest-debian` (tracks most recent release for Debian)
 - **Global latest tag**: `latest` (tracks most recent release, defaults to Debian)
 
@@ -235,9 +235,9 @@ Each distribution variant supports multiple CPU architectures for deployment acr
 
 | Variant | Architectures |
 |---------|---------------|
-| **Debian** | i386, amd64, arm32v5, arm32v7, arm64, mips64le, ppc64le, s390x |
+| **Debian** | amd64, arm32v7, arm64, ppc64le, riscv64, s390x |
 | **Alpine** | i386, amd64, arm32v6, arm32v7, arm64, ppc64le, riscv64, s390x |
-| **Rocky** | i386, amd64, arm32v5, arm32v7, arm64, mips64le, ppc64le, s390x |
+| **Rocky** | amd64, arm64, ppc64le, s390x |
 
 Docker automatically selects the appropriate architecture for your platform when pulling images.
 
