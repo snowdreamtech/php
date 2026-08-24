@@ -3,21 +3,10 @@
 ## [8.4.23](https://github.com/snowdreamtech/php/compare/rocky-v8.4.23...rocky-v8.4.23) (2026-08-10)
 
 
-### 🚀 Features
 
-* add acme.sh to nginx variants and update to v3.1.3 ([c1c0ae4](https://github.com/snowdreamtech/php/commit/c1c0ae4178be1003cbb5bd684f1685abe6ad0cb3))
-* **docker:** add igbinary php extension to all variants ([9352a12](https://github.com/snowdreamtech/php/commit/9352a12ac6eb9fc79b791ec5f3608c7267465652))
-* **docker:** add memcached and mongodb extensions to all variants ([1882bf2](https://github.com/snowdreamtech/php/commit/1882bf2c2f0ce81297b110c41ec7b6ebcbcbc5ce))
-* **docker:** upgrade PHP to latest versions from official repos ([6dd11fa](https://github.com/snowdreamtech/php/commit/6dd11faed2758c60c3e69b9622b29f28244d8795))
-* implement multi-flavor tag architecture (cli, cgi, fpm) mirroring aria2 ([80b783e](https://github.com/snowdreamtech/php/commit/80b783e1ab3e6b8c5af7e68586b568a34d985fba))
-* introduce nginx flavor for an out-of-the-box PHP-FPM + Nginx bundled environment ([67c2f4f](https://github.com/snowdreamtech/php/commit/67c2f4f47f0e67b5c44a8982977765a2e198da29))
-* **rocky:** install mainstream PHP extensions and Composer ([5b9623f](https://github.com/snowdreamtech/php/commit/5b9623fe78e0a509900f7374050b80a6577df9e5))
-* unify PHP-FPM and Nginx user to www-data ([1d4bea4](https://github.com/snowdreamtech/php/commit/1d4bea42a6b662eafa048ba360e212703a84312b))
-
-
-### 🐛 Bug Fixes
-
+### ♻️ Miscellaneous Chores
 * **cgi:** expose port 9000 and bind to 0.0.0.0 ([2a9cc50](https://github.com/snowdreamtech/php/commit/2a9cc503f9b006f8b12ddaca366e3d9ce58eb5c1))
+
 * copy native default html pages to unified NGINX_WEB_ROOT in Dockerfile.nginx ([7ff647e](https://github.com/snowdreamtech/php/commit/7ff647e59dec8544a4993edb6bda3f95a9b1049e))
 * **docker/alpine:** replace non-existent php84-cli with php84 package and remove duplicate opcache in all variants ([1b75739](https://github.com/snowdreamtech/php/commit/1b75739edd1d55e352c28e40641b46352edf0a7e))
 * **docker:** correct PHP package names for Rocky Linux ([b5d22c3](https://github.com/snowdreamtech/php/commit/b5d22c36b67635453a0b69db2e932b3e0c98e4bc))
@@ -48,6 +37,9 @@
 * symlink nginx logs to stdout/stderr for proper container logging ([bc12ab6](https://github.com/snowdreamtech/php/commit/bc12ab69ea43fdb910fcaf7cc0f65967f21d3116))
 * use ghcr.io for base images to avoid rate limits ([9f1d73a](https://github.com/snowdreamtech/php/commit/9f1d73a75a61f2f368f5572c4bd28f4c92ef8fd5))
 * whitelist nginx conf.d and http.d directories in gitignore ([1d51c0c](https://github.com/snowdreamtech/php/commit/1d51c0ccab324f2b2f8a7ff500909f221b735825))
+* **docker:** ignore unavailable repos for rocky build ([a6b6b6e](https://github.com/snowdreamtech/base/commit/a6b6b6e5b2288cfeb6b2777902b85e7e5f37f2c3))
+
+## [10.1.0](https://github.com/snowdreamtech/base/compare/rocky-v10.1.0...rocky-v10.1.0) (2026-04-29)
 
 
 ### 🛠 Refactoring
