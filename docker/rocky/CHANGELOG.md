@@ -131,45 +131,6 @@
 * **speckit:** manual auto-commit trigger ([5f8a5a9](https://github.com/snowdreamtech/php/commit/5f8a5a9cba5d6bd42a65eaabfecd6e18b01aeeb0))
 * style fixes and remove trailing empty lines ([d09187f](https://github.com/snowdreamtech/php/commit/d09187f4756c95d7155a091cb633f1839462cb86))
 
-## [8.4.23](https://github.com/snowdreamtech/php/compare/rocky-v8.4.23...rocky-v8.4.23) (2026-08-10)
-
-
-
-### ♻️ Miscellaneous Chores
-* **cgi:** expose port 9000 and bind to 0.0.0.0 ([2a9cc50](https://github.com/snowdreamtech/php/commit/2a9cc503f9b006f8b12ddaca366e3d9ce58eb5c1))
-
-* copy native default html pages to unified NGINX_WEB_ROOT in Dockerfile.nginx ([7ff647e](https://github.com/snowdreamtech/php/commit/7ff647e59dec8544a4993edb6bda3f95a9b1049e))
-* **docker/alpine:** replace non-existent php84-cli with php84 package and remove duplicate opcache in all variants ([1b75739](https://github.com/snowdreamtech/php/commit/1b75739edd1d55e352c28e40641b46352edf0a7e))
-* **docker:** correct PHP package names for Rocky Linux ([b5d22c3](https://github.com/snowdreamtech/php/commit/b5d22c36b67635453a0b69db2e932b3e0c98e4bc))
-* **docker:** dynamic resolution of php-cgi and php-fpm binaries in entrypoint scripts ([43007d5](https://github.com/snowdreamtech/php/commit/43007d51272ed08951fb2e26ab6da63549d197ae))
-* **docker:** ensure php binary exists and enhance smoke tests ([4c232ac](https://github.com/snowdreamtech/php/commit/4c232ac739111c9a0ec35191d89f488d0262cc86))
-* **docker:** ensure php-cli is installed for composer across fpm, cgi, and nginx variants ([9fe24e4](https://github.com/snowdreamtech/php/commit/9fe24e444cfdce27974b90fb7af8ac10c46f653a))
-* **docker:** fix smoke test hanging for CGI and FPM failing to start ([397c558](https://github.com/snowdreamtech/php/commit/397c55850d99924606368cf4c6d48c3307d1a08f))
-* **docker:** pin precise PHP 8.4 versions and fix package names for Alpine, Debian and Rocky ([0125f3e](https://github.com/snowdreamtech/php/commit/0125f3e48210bd6a3adb24909f2160ba83872b78))
-* **docker:** remove non-existent php8.4-cgi package in Rocky CGI ([1532552](https://github.com/snowdreamtech/php/commit/1532552afdb04462b955498e78944504a9f1ce97))
-* **docker:** remove unavailable pecl extensions from rocky variants ([c1232c9](https://github.com/snowdreamtech/php/commit/c1232c96f777d7f23cef866633448a8e2b61b4b6))
-* **docker:** resolve multi-arch build errors and improve composer installation robustness ([29551e3](https://github.com/snowdreamtech/php/commit/29551e3f62bab4a7983ee621367d14c7e4fc2b52))
-* **docker:** resolve PECL package version pinning and missing sockets in Rocky ([45b5177](https://github.com/snowdreamtech/php/commit/45b51772cf2a409f386f6c67233f9ff881143ddc))
-* **docker:** unpin php8.4-sodium version in Rocky Linux to resolve EPEL version mismatch ([86e574f](https://github.com/snowdreamtech/php/commit/86e574f2094282da62247667b772226922bea477))
-* **docker:** update debian php version and drop strict pinning for rocky ([9180828](https://github.com/snowdreamtech/php/commit/91808284063ba748d2c7604313a9cded4d7e1769))
-* **docker:** update PHP versions to latest available in official repos ([321b1f9](https://github.com/snowdreamtech/php/commit/321b1f940c85055f614fe8fc7d04db07da38883a))
-* **fpm-rocky:** create /run/php-fpm PID directory at startup ([2b28c9f](https://github.com/snowdreamtech/php/commit/2b28c9fba72e0c076191aae3916dff476d1187f6))
-* **fpm:** broaden nginx filter to ignore systemd service drops ([ffb327c](https://github.com/snowdreamtech/php/commit/ffb327c3c6a7553c1426ef751d4c621896915767))
-* **fpm:** ensure PID directories exist across all distros ([f24518f](https://github.com/snowdreamtech/php/commit/f24518f3d0baedc97b90d2de5a197c0c38c9edc4))
-* **fpm:** ignore nginx-provided php-fpm.conf in config discovery ([69d556a](https://github.com/snowdreamtech/php/commit/69d556a3f982249fa6a853a99f5fc1040dce4301))
-* **fpm:** replace find-based config discovery with deterministic path lookup ([02e7a56](https://github.com/snowdreamtech/php/commit/02e7a564769e24d33ac9bb2fe37efe673ff2102c))
-* keep 25-nginx-start.sh uniformly in entrypoint.d directory and explicitly copy it ([c366eda](https://github.com/snowdreamtech/php/commit/c366eda8e851c616e17f144f9feefdb92fcba65a))
-* remove hardcoded email from acme.sh installation ([92f3878](https://github.com/snowdreamtech/php/commit/92f3878b8d63b6cecfcd5e5d53e2853b1814cc47))
-* remove redundant entrypoint.d directory creation in cli variant ([1624963](https://github.com/snowdreamtech/php/commit/1624963edaffc83bc6d0f7c5e4538b382b2e9c11))
-* remove static version defaults from OCI image labels to use variable injection exclusively ([da5645a](https://github.com/snowdreamtech/php/commit/da5645ad4d48467290235abbbd9f31ba70bf690f))
-* rename cron start script to match COPY globs in Dockerfile ([2769cd5](https://github.com/snowdreamtech/php/commit/2769cd518e638fe9435868d3099a23800d7d7508))
-* **rocky:** remove spurious nginx/httpd configs from php-fpm image ([e7b0a2b](https://github.com/snowdreamtech/php/commit/e7b0a2ba33bb1b4514cb9a3df2b00beea32ab26f))
-* start cron daemon in entrypoint and fix indentation in rocky Dockerfile ([f0701a2](https://github.com/snowdreamtech/php/commit/f0701a25241d1ad60abd04641dfc0faaa971b25b))
-* symlink nginx logs to stdout/stderr for proper container logging ([bc12ab6](https://github.com/snowdreamtech/php/commit/bc12ab69ea43fdb910fcaf7cc0f65967f21d3116))
-* use ghcr.io for base images to avoid rate limits ([9f1d73a](https://github.com/snowdreamtech/php/commit/9f1d73a75a61f2f368f5572c4bd28f4c92ef8fd5))
-* whitelist nginx conf.d and http.d directories in gitignore ([1d51c0c](https://github.com/snowdreamtech/php/commit/1d51c0ccab324f2b2f8a7ff500909f221b735825))
-* **docker:** ignore unavailable repos for rocky build ([a6b6b6e](https://github.com/snowdreamtech/base/commit/a6b6b6e5b2288cfeb6b2777902b85e7e5f37f2c3))
-
 ## [10.1.0](https://github.com/snowdreamtech/base/compare/rocky-v10.1.0...rocky-v10.1.0) (2026-04-29)
 
 
