@@ -17,7 +17,7 @@ ARG BUILDTIME \
     PUID=0 \
     USER=root \
     WORKDIR=/root \
-    PHP_VERSION=8.4.24-r0 \
+    PHP_VERSION=8.4.25-r0 \
     ACME_SH_VERSION=3.1.3 \
     GITHUB_PROXY="https://gh-proxy.sn0wdr1am.com/"
 
