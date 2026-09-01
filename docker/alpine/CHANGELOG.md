@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.4.25](https://github.com/snowdreamtech/php/compare/alpine-v8.4.24...alpine-v8.4.25) (2026-09-01)
+
+
+### 🐛 Bug Fixes
+
+* **alpine:** update php package version to 8.4.25-r0 ([c234ac1](https://github.com/snowdreamtech/php/commit/c234ac14d3f4d7f8176b2a701b7e95c31303f2fc))
+
 ## [8.4.24](https://github.com/snowdreamtech/php/compare/alpine-v8.4.24...alpine-v8.4.24) (2026-08-24)
 
 
@@ -116,4 +123,3 @@
 * **release:** implement automatic changelog deduplication step ([282c220](https://github.com/snowdreamtech/php/commit/282c22081e1ad7a1a010a7f297d20bc7c9b416a7))
 * style fixes and remove trailing empty lines ([d09187f](https://github.com/snowdreamtech/php/commit/d09187f4756c95d7155a091cb633f1839462cb86))
 * update alpine base image to 3.24.1 ([3021ed3](https://github.com/snowdreamtech/php/commit/3021ed3b4ffa5f8916f5fa46aa4325e8ebf84ba6))
-
