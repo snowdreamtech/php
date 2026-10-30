@@ -1,10 +1,10 @@
 # Docker Image Tags Reference
 
-This document describes the Docker image tagging strategy for the base template project.
+This document describes the Docker image tagging strategy for the PHP project.
 
 ## Tag Naming Convention
 
-All images use the format: `snowdreamtech/base:TAG`
+All images use the format: `snowdreamtech/php:TAG`
 
 Where `TAG` follows these patterns:
 
@@ -13,10 +13,10 @@ Where `TAG` follows these patterns:
 
 ## Supported Registries
 
-All tags are pushed to three registries:
+All tags are pushed to two registries:
 
-- **DockerHub**: `snowdreamtech/base:TAG`
-- **GitHub Container Registry**: `ghcr.io/snowdreamtech/base:TAG`
+- **DockerHub**: `snowdreamtech/php:TAG`
+- **GitHub Container Registry**: `ghcr.io/snowdreamtech/php:TAG`
 
 ## Tag Scenarios
 
@@ -31,10 +31,10 @@ git push origin dev
 **Generated tags:**
 
 ```
-snowdreamtech/base:dev-alpine
-snowdreamtech/base:dev-debian
-snowdreamtech/base:dev              # ← Debian (default)
-snowdreamtech/base:dev-rocky
+snowdreamtech/php:dev-alpine
+snowdreamtech/php:dev-debian
+snowdreamtech/php:dev              # ← Debian (default)
+snowdreamtech/php:dev-rocky
 ```
 
 #### Push to `main` branch
@@ -46,14 +46,14 @@ git push origin main
 **Generated tags:**
 
 ```
-snowdreamtech/base:main-alpine
-snowdreamtech/base:latest-alpine
-snowdreamtech/base:main-debian
-snowdreamtech/base:latest-debian
-snowdreamtech/base:main             # ← Debian (default)
-snowdreamtech/base:latest           # ← Debian (default)
-snowdreamtech/base:main-rocky
-snowdreamtech/base:latest-rocky
+snowdreamtech/php:main-alpine
+snowdreamtech/php:latest-alpine
+snowdreamtech/php:main-debian
+snowdreamtech/php:latest-debian
+snowdreamtech/php:main             # ← Debian (default)
+snowdreamtech/php:latest           # ← Debian (default)
+snowdreamtech/php:main-rocky
+snowdreamtech/php:latest-rocky
 ```
 
 ---
@@ -70,8 +70,8 @@ git push origin alpine-v3.23.4
 **Generated tags:**
 
 ```
-snowdreamtech/base:3.23.4-alpine
-snowdreamtech/base:latest-alpine
+snowdreamtech/php:3.23.4-alpine
+snowdreamtech/php:latest-alpine
 ```
 
 #### Debian Release
@@ -84,10 +84,10 @@ git push origin debian-v13.4.0
 **Generated tags:**
 
 ```
-snowdreamtech/base:13.4.0-debian
-snowdreamtech/base:latest-debian
-snowdreamtech/base:13.4.0           # ← Debian (default)
-snowdreamtech/base:latest           # ← Debian (default)
+snowdreamtech/php:13.4.0-debian
+snowdreamtech/php:latest-debian
+snowdreamtech/php:13.4.0           # ← Debian (default)
+snowdreamtech/php:latest           # ← Debian (default)
 ```
 
 #### Rocky Release
@@ -100,8 +100,8 @@ git push origin rocky-v10.1.0
 **Generated tags:**
 
 ```
-snowdreamtech/base:10.1.0-rocky
-snowdreamtech/base:latest-rocky
+snowdreamtech/php:10.1.0-rocky
+snowdreamtech/php:latest-rocky
 ```
 
 ---
@@ -114,18 +114,18 @@ snowdreamtech/base:latest-rocky
 
 ```
 # Alpine
-snowdreamtech/base:nightly-alpine
-snowdreamtech/base:20260427-alpine
+snowdreamtech/php:nightly-alpine
+snowdreamtech/php:20260427-alpine
 
 # Debian (with default tags)
-snowdreamtech/base:nightly-debian
-snowdreamtech/base:20260427-debian
-snowdreamtech/base:nightly          # ← Debian (default)
-snowdreamtech/base:20260427         # ← Debian (default)
+snowdreamtech/php:nightly-debian
+snowdreamtech/php:20260427-debian
+snowdreamtech/php:nightly          # ← Debian (default)
+snowdreamtech/php:20260427         # ← Debian (default)
 
 # Rocky
-snowdreamtech/base:nightly-rocky
-snowdreamtech/base:20260427-rocky
+snowdreamtech/php:nightly-rocky
+snowdreamtech/php:20260427-rocky
 ```
 
 ---
@@ -151,21 +151,21 @@ Debian is designated as the **default variant** (`is_latest: true`), which means
 ✅ **Debian gets BOTH suffixed AND unsuffixed tags:**
 
 ```
-snowdreamtech/base:nightly-debian   # Variant-specific
-snowdreamtech/base:nightly          # Default (no suffix)
+snowdreamtech/php:nightly-debian   # Variant-specific
+snowdreamtech/php:nightly          # Default (no suffix)
 
-snowdreamtech/base:13.4.0-debian    # Variant-specific
-snowdreamtech/base:13.4.0           # Default (no suffix)
+snowdreamtech/php:13.4.0-debian    # Variant-specific
+snowdreamtech/php:13.4.0           # Default (no suffix)
 
-snowdreamtech/base:latest-debian    # Variant-specific
-snowdreamtech/base:latest           # Default (no suffix)
+snowdreamtech/php:latest-debian    # Variant-specific
+snowdreamtech/php:latest           # Default (no suffix)
 ```
 
 ❌ **Alpine and Rocky get ONLY suffixed tags:**
 
 ```
-snowdreamtech/base:nightly-alpine   # Variant-specific only
-snowdreamtech/base:nightly-rocky    # Variant-specific only
+snowdreamtech/php:nightly-alpine   # Variant-specific only
+snowdreamtech/php:nightly-rocky    # Variant-specific only
 ```
 
 ---
@@ -175,49 +175,49 @@ snowdreamtech/base:nightly-rocky    # Variant-specific only
 ### Pull the latest Debian image (default)
 
 ```bash
-docker pull snowdreamtech/base:latest
+docker pull snowdreamtech/php:latest
 # or
-docker pull snowdreamtech/base:latest-debian
+docker pull snowdreamtech/php:latest-debian
 ```
 
 ### Pull the latest Alpine image
 
 ```bash
-docker pull snowdreamtech/base:latest-alpine
+docker pull snowdreamtech/php:latest-alpine
 ```
 
 ### Pull the latest Rocky image
 
 ```bash
-docker pull snowdreamtech/base:latest-rocky
+docker pull snowdreamtech/php:latest-rocky
 ```
 
 ### Pull a specific version
 
 ```bash
 # Alpine 3.23.4
-docker pull snowdreamtech/base:3.23.4-alpine
+docker pull snowdreamtech/php:3.23.4-alpine
 
 # Debian 13.4.0 (two ways)
-docker pull snowdreamtech/base:13.4.0-debian
-docker pull snowdreamtech/base:13.4.0
+docker pull snowdreamtech/php:13.4.0-debian
+docker pull snowdreamtech/php:13.4.0
 
 # Rocky 10.1.0
-docker pull snowdreamtech/base:10.1.0-rocky
+docker pull snowdreamtech/php:10.1.0-rocky
 ```
 
 ### Pull nightly builds
 
 ```bash
 # Alpine nightly
-docker pull snowdreamtech/base:nightly-alpine
+docker pull snowdreamtech/php:nightly-alpine
 
 # Debian nightly (two ways)
-docker pull snowdreamtech/base:nightly-debian
-docker pull snowdreamtech/base:nightly
+docker pull snowdreamtech/php:nightly-debian
+docker pull snowdreamtech/php:nightly
 
 # Rocky nightly
-docker pull snowdreamtech/base:nightly-rocky
+docker pull snowdreamtech/php:nightly-rocky
 ```
 
 ---
@@ -272,8 +272,8 @@ The key configuration that enables this tagging strategy:
 
 ```yaml
 images: |
-  name=snowdreamtech/base,enable=true
-  name=ghcr.io/snowdreamtech/base,enable=true
+  name=snowdreamtech/php,enable=true
+  name=ghcr.io/snowdreamtech/php,enable=true
 flavor: |
   latest=false
   prefix=
